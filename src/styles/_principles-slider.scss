@@ -1,0 +1,17 @@
+.principles-slider {
+  display: flex;
+  overflow-x: scroll;
+  //scroll-behavior: smooth;
+  
+
+  &__slide {
+    width: 100%;
+    height: 500px;
+    min-width: 700px;
+    //height: 100%;
+    border: 1px solid crimson;
+  }
+}
+.principles-slider-wrapper {
+  display: grid;
+}
