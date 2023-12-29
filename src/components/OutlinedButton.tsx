@@ -23,6 +23,20 @@ export const OutlinedButton: React.FC<ButtonProps> = ({
       className={`button${className ? ` ${className}` : ''}`}
       endIcon={loading ? <CircularProgress size={16} color="inherit" /> : null}
       type={type}
+      sx={{
+        fontFamily: 'SF Pro Text',
+        fontSize: '16px',
+        fontWeight: 400,
+        textTransform: 'none',
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+        color: '#e3fd52',
+        borderRadius: '10px',
+        '&:hover': {
+          background: '#fff',
+          color: '#0C0B0C',
+          borderColor: '#fff',
+        },
+      }}
     >
       {children}
     </MaterialButton>

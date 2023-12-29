@@ -1,4 +1,6 @@
-body{
+@use 'variables' as *;
+body {
+  padding-top: 96px;
 }
 
 .main-slider {
@@ -11,9 +13,11 @@ body{
     display: none;
   }
   &__slide {
-    padding: 80px;
     border: 1px solid yellow;
     height: calc(100% - 1px);
     scroll-snap-align: center;
+    &:not(#principles) {
+      padding: 80px;
+    }
   }
 }

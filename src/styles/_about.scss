@@ -1,5 +1,5 @@
 @use 'variables' as *;
-.about {
+.heading {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -11,5 +11,25 @@
     @include font(108);
     font-weight: $regular;
     line-height: 100%;
+  }
+}
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__details {
+    margin-bottom: 64px;
+    strong {
+      font-weight: $regular;
+      line-height: 1;
+      @include font(72);
+    }
+  }
+  &__goal {
+    @include font(36);
+  }
+  &__bottom {
+    @include font(24);
+    color: $on-surface-70;
   }
 }

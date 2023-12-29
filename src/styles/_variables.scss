@@ -1,7 +1,14 @@
 $surface: #0c0b0c;
+$surface-container: #161516;
 $on-surface: #fff;
+$on-surface-70: rgba(255, 255, 255, 0.7);
 $on-surface-50: rgba(255, 255, 255, 0.5);
 $primary: #e3fd52;
+
+$regular: var(--regular);
+$medium: var(--medium);
+$semibold: var(--semibold);
+$bold: var(--bold);
 
 @mixin font($size) {
   @if $size < 21 {
@@ -12,7 +19,10 @@ $primary: #e3fd52;
     font-family: 'SF Pro Display', sans-serif;
   }
 }
-$regular: var(--regular);
-$medium: var(--medium);
-$semibold: var(--semibold);
-$bold: var(--bold);
+
+@mixin primary-gradient() {
+  background: linear-gradient(180deg, rgba(2, 1, 2, 0) 32.68%, rgba(2, 1, 2, 0.5) 80%) no-repeat,
+    linear-gradient(180deg, #e3fd52 0%, #e3fd52 100%) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

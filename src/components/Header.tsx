@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import OutlinedButton from '@/components/OutlinedButton';
 
-const Header = ({activeLink}: {activeLink: 'about' | 'principles' | 'projects'}) => {
+const Header = ({activeLink}: {activeLink: 'about' | 'principles' | 'projects' | ''}) => {
   console.log(activeLink);
 
   return (

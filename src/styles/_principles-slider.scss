@@ -11,6 +11,7 @@
     transform: translate(-50%, -50%);
   }
   &__hero-text {
+    font-weight: 600;
     overflow: hidden;
     background: linear-gradient(180deg, rgba(2, 1, 2, 0) 32.68%, rgba(2, 1, 2, 0.5) 80%) no-repeat,
       linear-gradient(180deg, #e3fd52 0%, #e3fd52 100%) no-repeat;
@@ -25,7 +26,6 @@
 .principles-slider {
   display: flex;
   overflow-x: scroll;
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -33,7 +33,46 @@
   &__slide {
     flex-shrink: 0;
     height: 100%;
-    width: 100vw;
-    border: 1px solid crimson;
+    &:first-of-type,
+    &:last-of-type {
+      width: 100vw;
+    }
+  }
+}
+.principles-grid {
+  display: grid;
+  grid-template-rows: repeat(2, min-content);
+  grid-template-columns: repeat(3, 620px);
+  grid-gap: 48px;
+}
+.principle-card {
+  background: $surface-container;
+  border-radius: 60px;
+  place-content: center;
+  padding: 48px;
+
+  h3 {
+    @include font(64);
+    line-height: 1;
+    font-weight: $regular;
+    margin-bottom: 32px;
+  }
+  p {
+    @include font(24);
+    line-height: 120%;
+  }
+
+  &:nth-child(1) {
+    align-self: flex-end;
+  }
+
+  &:nth-child(2) {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    align-self: flex-start;
+  }
+  &:nth-child(3) {
+    align-self: flex-end;
+    grid-column: 3/4;
   }
 }
