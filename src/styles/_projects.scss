@@ -1,0 +1,46 @@
+@use 'variables' as *;
+#projects {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  h2 {
+    @include fontRem(7.2);
+  }
+}
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+.project-card {
+  background-color: $surface-container;
+  padding: 3.2rem;
+  border-radius: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    margin-bottom: 3.2rem;
+    width: 12rem;
+    height: 12rem;
+    border-radius: 20px;
+  }
+  h3 {
+    @include fontRem(3.2);
+    margin-bottom: 1.2rem;
+  }
+  p {
+    color: $on-surface-70;
+    font-family: 'SF Pro Text', sans-serif;
+    font-size: max(1.6rem, 14px);
+    line-height: 120%;
+    text-align: center;
+  }
+  &:last-of-type {
+    display: grid;
+    place-items: center;
+    span{
+      @include fontRem(3.2);
+    }
+  }
+}

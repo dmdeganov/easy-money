@@ -1,14 +1,18 @@
-$surface: #0c0b0c;
-$surface-container: #161516;
-$on-surface: #fff;
-$on-surface-70: rgba(255, 255, 255, 0.7);
-$on-surface-50: rgba(255, 255, 255, 0.5);
-$primary: #e3fd52;
+$surface: var(--surface);
+$surface-container: var(--surface-container);
+$on-surface: var(--on-surface);
+$on-surface-70: var(--on-surface-70);
+$on-surface-50: var(--on-surface-50);
+$primary: var(--primary);
 
 $regular: var(--regular);
 $medium: var(--medium);
 $semibold: var(--semibold);
 $bold: var(--bold);
+
+$content-mw: 1280px;
+$content-mw: min(1440px, calc(100vw - 160px));
+//$content-mw: calc(100vw - 160px);
 
 @mixin font($size) {
   @if $size < 21 {
@@ -16,6 +20,16 @@ $bold: var(--bold);
     font-family: 'SF Pro Text', sans-serif;
   } @else {
     font-size: #{$size}px;
+    font-family: 'SF Pro Display', sans-serif;
+  }
+}
+
+@mixin fontRem($size) {
+  @if $size * 10 < 21 {
+    font-size: #{$size}rem;
+    font-family: 'SF Pro Text', sans-serif;
+  } @else {
+    font-size: #{$size}rem;
     font-family: 'SF Pro Display', sans-serif;
   }
 }

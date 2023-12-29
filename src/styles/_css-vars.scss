@@ -1,0 +1,26 @@
+:root {
+  font-size: 10px;
+
+  @media (max-height: 950px) {
+    font-size: 9.5px;
+  }
+  @media (max-height: 900px) {
+    font-size: 9px;
+  }
+
+  @media (max-height: 850px) {
+    font-size: 8.5px;
+  }
+
+  @media (max-height: 800px) {
+    font-size: 8px;
+  }
+}
+:root {
+  --surface: #0c0b0c;
+  --surface-container: #161516;
+  --on-surface: #fff;
+  --on-surface-70: rgba(255, 255, 255, 0.7);
+  --on-surface-50: rgba(255, 255, 255, 0.5);
+  --primary: #e3fd52;
+}

@@ -24,7 +24,8 @@ export const OutlinedButton: React.FC<ButtonProps> = ({
       endIcon={loading ? <CircularProgress size={16} color="inherit" /> : null}
       type={type}
       sx={{
-        fontFamily: 'SF Pro Text',
+        fontFamily: `'SF Pro Text', sans-serif`,
+
         fontSize: '16px',
         fontWeight: 400,
         textTransform: 'none',

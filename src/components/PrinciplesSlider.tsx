@@ -43,9 +43,9 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
   return (
     <div className="principles">
       <div className="principles__hero">
-        <motion.span className="principles__hero-text" style={{backgroundSize, backgroundPosition}}>
+        <motion.h2 className="principles__hero-text" style={{backgroundSize, backgroundPosition}}>
           Принципы
-        </motion.span>
+        </motion.h2>
       </div>
       <div className="principles-slider" ref={ref}>
         <div className="principles-slider__slide" />

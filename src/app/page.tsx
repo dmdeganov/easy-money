@@ -3,6 +3,8 @@ import React, {useRef, useState} from 'react';
 import Header from '@/components/Header';
 import PrinciplesSlider from '@/components/PrinciplesSlider';
 import {useScroll, motion, useMotionValueEvent} from 'framer-motion';
+import Image from 'next/image';
+import ContactUsForm from '@/components/ContactUsForm';
 
 const Page = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -69,9 +71,64 @@ const Page = () => {
           />
         </section>
         <section className="main-slider__slide" id="projects">
-          4
+          <h2>
+            Наши <span className="text-gradient">проекты</span>
+          </h2>
+          <div className="projects">
+            <article className="project-card">
+              <Image src="/wi-fi-scanner.png" alt="Wi-Fi Scanner Logo" width={120} height={120} />
+              <h3>Wi-Fi Scanner</h3>
+              <p>
+                Приложение для сканирования
+                <br /> скрытых устройств по сети Wi-Fi
+              </p>
+            </article>
+            <article className="project-card">
+              <Image src="/invoice-creator.png" alt="Invoice Creator Logo" width={120} height={120} />
+              <h3>Invoice Creator</h3>
+              <p>
+                Приложение для создания
+                <br /> и отправки инвойсов
+              </p>
+            </article>
+            <article className="project-card">
+              <Image src="/bluetooth-radar.png" alt="Bluetooth Radar Logo" width={120} height={120} />
+              <h3>Bluetooth Radar</h3>
+              <p>
+                Приложение для сканирования
+                <br /> скрытых устройств по сети Bluetooth
+              </p>
+            </article>
+            <article className="project-card">
+              <Image src="/qr-code-generator.png" alt="QR Code Generator" width={120} height={120} />
+              <h3>QR Code Generator</h3>
+              <p>
+                Приложение для генерации
+                <br /> и сканирования QR кодов
+              </p>
+            </article>
+            <article className="project-card">
+              <Image src="/package-tracker.svg" alt="Package Tracker Logo" width={120} height={120} />
+              <h3>Package Tracker</h3>
+              <p>
+                Приложение для отслеживания
+                <br /> посылок
+              </p>
+            </article>
+            <div className="project-card">
+              <span className="text-primary">И много других</span>
+            </div>
+          </div>
         </section>
-        <section className="main-slider__slide">5</section>
+        <section className="main-slider__slide contact">
+          <hgroup>
+            <h2>
+              <span className="text-gradient">Работа</span> с нами
+            </h2>
+            <p>we@ezmoney.studio</p>
+          </hgroup>
+          <ContactUsForm />
+        </section>
       </div>
     </>
   );

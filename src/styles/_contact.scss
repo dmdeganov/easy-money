@@ -1,0 +1,17 @@
+@use 'variables' as *;
+.contact {
+  display: flex;
+  column-gap: 148px;
+  hgroup {
+    h2 {
+      @include fontRem(7.2);
+      margin-bottom: 32px;
+    }
+  }
+}
+.contact-form{
+  width: 414px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+}

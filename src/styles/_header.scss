@@ -1,14 +1,17 @@
 @use 'variables' as *;
-.header {
-  height: 96px;
+header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+}
+.header-inner {
+  max-width: $content-mw;
+  height: 9.6rem;
+  margin-inline: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 80px;
   background-color: $surface;
   nav {
     display: flex;

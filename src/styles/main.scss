@@ -1,10 +1,13 @@
 @use 'font-weightiness';
+@use 'css-vars';
 @use 'variables';
+@use 'css-reset';
 @use 'typography';
 @use 'root';
 @use 'utils';
-@use 'css-reset';
-@use 'main-slider';
 @use 'header';
-@use 'principles-slider';
+@use 'main-slider';
 @use 'about';
+@use 'principles-slider';
+@use 'projects';
+@use 'contact';

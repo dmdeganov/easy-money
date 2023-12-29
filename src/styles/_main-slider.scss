@@ -1,6 +1,6 @@
 @use 'variables' as *;
 body {
-  padding-top: 96px;
+  padding-top: max(9.6rem, 80px);
 }
 
 .main-slider {
@@ -13,11 +13,24 @@ body {
     display: none;
   }
   &__slide {
-    border: 1px solid yellow;
-    height: calc(100% - 1px);
+    height: 100%;
     scroll-snap-align: center;
     &:not(#principles) {
-      padding: 80px;
+      padding: 80px 0;
+      max-width: $content-mw;
+      margin-inline: auto;
     }
+  }
+  #projects {
+    padding: 0;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 400;
+    line-height: 1;
   }
 }

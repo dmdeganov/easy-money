@@ -74,6 +74,7 @@
 
 body {
   @include font(16);
+  font-weight: $regular;
 }
 h1 {
   font-weight: $semibold;

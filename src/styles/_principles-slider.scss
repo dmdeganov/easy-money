@@ -12,10 +12,11 @@
   }
   &__hero-text {
     font-weight: 600;
+    line-height: 1;
+    display: inline;
     overflow: hidden;
     background: linear-gradient(180deg, rgba(2, 1, 2, 0) 32.68%, rgba(2, 1, 2, 0.5) 80%) no-repeat,
       linear-gradient(180deg, #e3fd52 0%, #e3fd52 100%) no-repeat;
-    line-height: 1;
     -webkit-text-stroke: 1.5px #ffffff80;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -41,24 +42,24 @@
 }
 .principles-grid {
   display: grid;
+  place-content: center;
   grid-template-rows: repeat(2, min-content);
   grid-template-columns: repeat(3, 620px);
   grid-gap: 48px;
+  overflow: hidden;
 }
 .principle-card {
   background: $surface-container;
-  border-radius: 60px;
+  border-radius: 6rem;
   place-content: center;
-  padding: 48px;
+  padding: 4.8rem;
 
   h3 {
-    @include font(64);
-    line-height: 1;
-    font-weight: $regular;
-    margin-bottom: 32px;
+    @include fontRem(6.4);
+    margin-bottom: 3.2rem;
   }
   p {
-    @include font(24);
+    @include fontRem(2.4);
     line-height: 120%;
   }
 
