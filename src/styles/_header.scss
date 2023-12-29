@@ -1,3 +1,4 @@
+@use 'variables' as *;
 .header {
   height: 96px;
   position: fixed;
@@ -8,4 +9,38 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 80px;
+  background-color: $surface;
+  nav {
+    display: flex;
+    column-gap: 32px;
+  }
+}
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 8px;
+  &__underline {
+    transition: transform 0.3s, opacity 0.1s;
+    opacity: 0;
+    width: 2px;
+    height: 2px;
+    background-color: $primary;
+  }
+  a {
+    @include font(16);
+    font-weight: $regular;
+  }
+  &--active {
+    .link__underline {
+      opacity: 1;
+      transform: scaleX(12.5);
+    }
+  }
+
+  &:hover {
+    .link__underline {
+      opacity: 1;
+    }
+  }
 }

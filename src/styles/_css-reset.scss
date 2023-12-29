@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+* {
+  border: 0 none;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  box-sizing:border-box;
+}
+ol, ul {
+  list-style: none;
+}
+a, a:visited, a:active{
+  color: $on-surface;
+  text-decoration: none;
+}
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+}

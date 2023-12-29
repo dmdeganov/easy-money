@@ -1,0 +1,18 @@
+$surface: #0c0b0c;
+$on-surface: #fff;
+$on-surface-50: rgba(255, 255, 255, 0.5);
+$primary: #e3fd52;
+
+@mixin font($size) {
+  @if $size < 21 {
+    font-size: #{$size}px;
+    font-family: 'SF Pro Text', sans-serif;
+  } @else {
+    font-size: #{$size}px;
+    font-family: 'SF Pro Display', sans-serif;
+  }
+}
+$regular: var(--regular);
+$medium: var(--medium);
+$semibold: var(--semibold);
+$bold: var(--bold);

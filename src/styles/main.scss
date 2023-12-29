@@ -1,4 +1,9 @@
+@use 'font-weightiness';
+@use 'variables';
+@use 'typography';
 @use 'root';
-@use 'slider';
+@use 'css-reset';
+@use 'main-slider';
 @use 'header';
 @use 'principles-slider';
+@use 'about';

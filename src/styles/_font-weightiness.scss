@@ -1,0 +1,26 @@
+$default: (
+  'regular': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700,
+);
+
+$thinner: (
+  'regular': 300,
+  'medium': 400,
+  'semibold': 500,
+  'bold': 600,
+);
+
+:root {
+  &[data-font_weightiness='default'] {
+    @each $font-weight-name, $font-weight-value in $default {
+      --#{$font-weight-name}: #{$font-weight-value};
+    }
+  }
+  &[data-font_weightiness='thinner'] {
+    @each $font-weight-name, $font-weight-value in $thinner {
+      --#{$font-weight-name}: #{$font-weight-value};
+    }
+  }
+}
