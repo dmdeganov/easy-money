@@ -1,10 +1,7 @@
 'use client';
 import React from 'react';
-import {useForm, Controller, SubmitHandler} from 'react-hook-form';
-import {motion} from 'framer-motion';
+import {useForm, Controller} from 'react-hook-form';
 import TextField from '@/components/TextField';
-import useModal from '@/hooks/useModal';
-import {useSendEmail} from '@/hooks/useSendEmail';
 import ContainedButton from '@/components/ContainedButton';
 
 export interface FormInputs {
@@ -17,7 +14,7 @@ const ContactUsForm = () => {
   const {
     control,
     handleSubmit,
-    formState: {isValid, errors, touchedFields, dirtyFields},
+    formState: {isValid, errors, touchedFields},
     reset,
   } = useForm({
     mode: 'onBlur',
@@ -28,19 +25,19 @@ const ContactUsForm = () => {
     },
   });
 
-  const {isOpen, open, close, modalData, setModalData} = useModal<{success: boolean}>();
-  const onSuccess = () => {
-    setModalData({success: true});
-    reset();
-    open();
-  };
-  const onError = () => {
-    setModalData({success: false});
-    open();
-  };
-  const {sendEmail, loading} = useSendEmail({onError, onSuccess});
+  // const {isOpen, open, close, modalData, setModalData} = useModal<{success: boolean}>();
+  // const onSuccess = () => {
+  //   setModalData({success: true});
+  //   reset();
+  //   open();
+  // };
+  // const onError = () => {
+  //   setModalData({success: false});
+  //   open();
+  // };
+  // const {sendEmail, loading} = useSendEmail({onError, onSuccess});
 
-  const onSubmit: SubmitHandler<FormInputs> = async data => sendEmail(data);
+  // const onSubmit: SubmitHandler<FormInputs> = async data => sendEmail(data);
 
   const getInputValidationProps = (inputName: keyof FormInputs) => ({
     error: !!errors[inputName]?.message,
@@ -108,10 +105,10 @@ const ContactUsForm = () => {
         />
         <ContainedButton
           type="submit"
-          onClick={handleSubmit(onSubmit)}
+          // onClick={handleSubmit(onSubmit)}
           className="contact-form__submit-button"
-          disabled={!isValid || loading}
-          loading={loading}
+          disabled={!isValid}
+          // loading={loading}
         >
           Отправить
         </ContainedButton>

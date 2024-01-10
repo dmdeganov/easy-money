@@ -1,9 +1,6 @@
 import React from 'react';
 import {TextField as MUITextField} from '@mui/material';
 import {AnimatePresence, motion} from 'framer-motion';
-import {root} from 'postcss';
-import {Simulate} from 'react-dom/test-utils';
-import error = Simulate.error;
 
 interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'color'> {
   label?: string;
