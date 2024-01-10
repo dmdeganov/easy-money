@@ -5,35 +5,56 @@ import PrinciplesSlider from '@/components/PrinciplesSlider';
 import {useScroll, motion, useMotionValueEvent} from 'framer-motion';
 import Image from 'next/image';
 import ContactUsForm from '@/components/ContactUsForm';
+import SliderIndicator from '@/components/SliderIndicator';
 
 const Page = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const {scrollYProgress} = useScroll({container: sliderRef});
-
-  const [activeLink, setActiveLink] = useState<'about' | 'principles' | 'projects' | ''>('about');
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useMotionValueEvent(scrollYProgress, 'change', scrollY => {
+    if (scrollY < 0.2) {
+      setCurrentSlide(0);
+      return;
+    }
     if (scrollY < 0.4) {
-      setActiveLink('about');
+      setCurrentSlide(1);
+      return;
     }
-    if (scrollY >= 0.4 && scrollY < 0.6) {
-      setActiveLink('principles');
+    if (scrollY < 0.6) {
+      setCurrentSlide(2);
+      return;
     }
-    if (scrollY >= 0.6 && scrollY < 0.8) {
-      setActiveLink('projects');
+    if (scrollY < 0.8) {
+      setCurrentSlide(3);
+      return;
     }
-    if (scrollY >= 0.8) {
-      setActiveLink('');
-    }
+    setCurrentSlide(4);
   });
+
+  const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (e.deltaY === 100) {
+      e.preventDefault();
+      sliderRef.current!.scrollBy(0, 100);
+    }
+    if (e.deltaY === -100) {
+      e.preventDefault();
+      sliderRef.current!.scrollBy(0, -100);
+    }
+  };
 
   return (
     <>
-      <Header activeLink={activeLink} />
-      <div className="main-slider" ref={sliderRef}>
-        <section className="main-slider__slide heading" id="about">
+      <Header currentSlide={currentSlide} />
+      <SliderIndicator currentSlide={currentSlide} />
+      <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
+        <motion.section className="main-slider__slide heading" id="about">
           <hgroup>
-            <motion.h1 style={{opacity: 1}}>
+            <motion.h1
+              style={{opacity: 0}}
+              whileInView={{opacity: 1}}
+              viewport={{once: false, root: sliderRef, amount: 1, margin: '-50px 0px 0px 0px'}}
+            >
               <span className="text-gradient">Студия</span>
               <br />
               <span>Мобильной разработки</span>
@@ -41,7 +62,7 @@ const Page = () => {
               <span>Полного цикла</span>
             </motion.h1>
           </hgroup>
-        </section>
+        </motion.section>
         <section className="main-slider__slide about">
           <div className="about__top">
             <p className="about__details">
@@ -120,7 +141,7 @@ const Page = () => {
             </div>
           </div>
         </section>
-        <section className="main-slider__slide contact">
+        <section className="main-slider__slide contact" id="contact-us">
           <hgroup>
             <h2>
               <span className="text-gradient">Работа</span> с нами

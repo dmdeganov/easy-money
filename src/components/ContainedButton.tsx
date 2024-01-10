@@ -7,7 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   href?: string;
 }
-export const OutlinedButton: React.FC<ButtonProps> = ({
+export const ContainedButton: React.FC<ButtonProps> = ({
   children,
   onClick,
   disabled,
@@ -15,11 +15,10 @@ export const OutlinedButton: React.FC<ButtonProps> = ({
   type,
   loading,
   href,
-  ...rest
 }) => {
   return (
     <MaterialButton
-      variant="outlined"
+      variant="contained"
       disabled={disabled}
       onClick={onClick}
       className={`button${className ? ` ${className}` : ''}`}
@@ -28,17 +27,20 @@ export const OutlinedButton: React.FC<ButtonProps> = ({
       href={href}
       sx={{
         fontFamily: `'SF Pro Text', sans-serif`,
-
         fontSize: '16px',
-        fontWeight: 400,
+        fontWeight: 500,
+        padding: '16px 32px',
         textTransform: 'none',
-        borderColor: 'rgba(255, 255, 255, 0.5)',
-        color: 'var(--primary)',
+        backgroundColor: 'var(--primary)',
+        color: 'var(--surface)',
         borderRadius: '10px',
         '&:hover': {
           background: '#fff',
-          color: 'var(--surface)',
-          borderColor: '#fff',
+          color: '#0C0B0C',
+        },
+        '&:disabled': {
+          background: '#2D2D2D',
+          color: 'rgba(255, 255, 255, 0.2)',
         },
       }}
     >
@@ -47,4 +49,4 @@ export const OutlinedButton: React.FC<ButtonProps> = ({
   );
 };
 
-export default OutlinedButton;
+export default ContainedButton;

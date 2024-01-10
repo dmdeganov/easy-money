@@ -23,9 +23,9 @@ export function useSendEmail({onSuccess, onError}: Props) {
         body: JSON.stringify({subject: `Message from ${data.name} (${data.email})`, text}),
       }).then(res => res.json());
       onSuccess();
-      console.log({response});
+      // console.log({response});
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       onError();
     } finally {
       setLoading(false);

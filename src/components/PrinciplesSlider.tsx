@@ -1,13 +1,19 @@
 import React, {useEffect, useRef} from 'react';
-import {interpolate, motion, useAnimation, useScroll, useTransform} from 'framer-motion';
+import {motion, useScroll, useTransform, useSpring} from 'framer-motion';
 
 const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: number) => void}) => {
   const ref = useRef<HTMLDivElement>(null);
   const {scrollXProgress} = useScroll({
     container: ref,
   });
+  const scrollXSpringed = useSpring(scrollXProgress, {
+    stiffness: 80,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   const backgroundSize = useTransform(
-    scrollXProgress,
+    scrollXSpringed,
     // Map x from these values:
     [0, 0.5, 1],
     // Into these values:

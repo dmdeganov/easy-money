@@ -9,9 +9,23 @@
     }
   }
 }
-.contact-form{
+.contact-form {
   width: 414px;
   display: flex;
   flex-direction: column;
-  row-gap: 32px;
+  row-gap: 24px;
+  align-items: flex-start;
+  &__submit-button {
+    min-width: 197px;
+    margin-top: 8px;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0 0 0px 1000px $surface inset;
+    overflow: hidden;
+  }
 }

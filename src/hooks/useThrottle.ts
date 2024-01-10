@@ -6,7 +6,7 @@ export function useThrottle<F extends (...args: any) => any>(callback: F, delay 
   return useCallback(
     (...args: Parameters<F>) => {
       if (isThrottled.current) {
-        console.log('event throttled')
+        // console.log('event throttled')
         return;
       }
       callback(...args);
