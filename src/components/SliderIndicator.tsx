@@ -12,7 +12,7 @@ const SliderIndicator = ({currentSlide}: {currentSlide: number}) => {
         const isActive = dot === currentSlide;
         const style = {
           backgroundColor: isActive ? '#E3FD52' : '#ffffff80',
-          scale: isActive ? 1.5 : 1,
+          scale: isActive ? 1.66 : 1,
         };
 
         return (
