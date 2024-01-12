@@ -27,6 +27,7 @@
 .principles-slider {
   display: flex;
   overflow-x: scroll;
+  //scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
   }

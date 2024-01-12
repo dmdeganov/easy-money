@@ -70,6 +70,7 @@ export const muiTextFieldFloatLabelSx = {
     fontSize: '20px',
     marginTop: '8px',
     fontFamily: `'SF Pro Text', sans-serif`,
+    caretColor: 'var(--primary)',
   },
   '& label, & label.Mui-disabled ': {
     fontFamily: `'SF Pro Text', sans-serif`,

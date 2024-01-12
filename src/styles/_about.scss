@@ -2,13 +2,15 @@
 .heading {
   display: flex;
   flex-direction: column;
+  //justify-content: center;
   justify-content: flex-end;
   align-items: flex-start;
   hgroup {
-    padding-bottom: 16px;
-  }
-  h1 {
+    min-height: 403px;
     @include font(108);
+    div {
+      overflow: hidden;
+    }
   }
 }
 .about {
@@ -16,11 +18,14 @@
   flex-direction: column;
   justify-content: space-between;
   &__details {
+    min-height: 395.2px;
     margin-bottom: 64px;
-    strong {
-      font-weight: $regular;
-      line-height: 1;
-      @include font(72);
+    display: block;
+    font-weight: $regular;
+    line-height: 1;
+    @include font(72);
+    & > span {
+      display: block;
     }
   }
   &__goal {
