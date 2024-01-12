@@ -18,9 +18,9 @@
   flex-direction: column;
   justify-content: space-between;
   &__details {
-    min-height: 395.2px;
-    margin-bottom: 64px;
-    display: block;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     font-weight: $regular;
     line-height: 1;
     @include font(72);
@@ -30,8 +30,10 @@
   }
   &__goal {
     @include font(36);
+    margin-top: 64px;
   }
   &__bottom {
+    margin-top: auto;
     @include font(24);
     color: $on-surface-70;
   }
