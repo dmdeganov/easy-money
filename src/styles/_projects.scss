@@ -6,6 +6,20 @@
   h2 {
     @include fontRem(7.2);
   }
+  hgroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div {
+      display: flex;
+      gap: 3.2rem;
+      img {
+        width: 12rem;
+        height: 12rem;
+        display: block;
+      }
+    }
+  }
 }
 .projects {
   display: grid;
@@ -20,9 +34,9 @@
   flex-direction: column;
   align-items: center;
   img {
-    margin-bottom: 3.2rem;
-    width: 12rem;
-    height: 12rem;
+    margin-bottom: 2.8rem;
+    width: 11rem;
+    height: 11rem;
     border-radius: 20px;
   }
   h3 {
@@ -39,7 +53,7 @@
   &:last-of-type {
     display: grid;
     place-items: center;
-    span{
+    span {
       @include fontRem(3.2);
     }
   }

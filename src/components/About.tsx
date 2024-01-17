@@ -28,7 +28,6 @@ const About = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
   };
 
   useEffect(() => {
-    console.log({isInView});
     if (isInView) {
       setVariant('inView');
     } else {
@@ -37,29 +36,25 @@ const About = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
   }, [isInView]);
 
   return (
-    <>
-      <div className="about__top">
-        <motion.p className="about__details" ref={ref} variants={container} initial="inView" animate={variant}>
-          <motion.span variants={item}>
-            Маленькая <span className="text-gradient">студия</span>
-          </motion.span>
-          <motion.span variants={item}>
-            <span className="text-gradient">c большими</span> идеями
-          </motion.span>
-          <motion.span variants={item}>и огромными</motion.span>
-          <motion.span variants={item}>
-            <span className="text-gradient">возможностями.</span>
-          </motion.span>
-        </motion.p>
-        <p className="about__goal">
+    <motion.div className="about__details" ref={ref} variants={container} initial="inView" animate={variant}>
+      <motion.span variants={item}>
+          Маленькая <span className="text-gradient">студия</span>
+      </motion.span>
+      <motion.span variants={item}>
+        <span className="text-gradient">c большими</span> идеями
+      </motion.span>
+      <motion.span variants={item}>и огромными</motion.span>
+      <motion.span variants={item}>
+        <span className="text-gradient">возможностями.</span>
+      </motion.span>
+      <motion.p className="about__goal" variants={item}>
           Наша цель – <span className="text-primary">№1</span> в категории{' '}
-          <span className="text-primary">Утилиты.</span>
-        </p>
-      </div>
-      <div className="about__bottom">
-        <p>Быстро. Легко. Успешно.</p>
-      </div>
-    </>
+        <span className="text-primary">Утилиты.</span>
+      </motion.p>
+      <motion.p className="about__bottom" variants={item}>
+          Быстро. Легко. Успешно.
+      </motion.p>
+    </motion.div>
   );
 };
 

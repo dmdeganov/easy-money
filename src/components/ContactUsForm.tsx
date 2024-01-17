@@ -55,7 +55,7 @@ const ContactUsForm = () => {
             required: true,
             minLength: {
               value: 2,
-              message: 'Name should have at least 2 characters',
+              message: 'Поле должно содержать не менее двух символов',
             },
           }}
           render={({field}) => (
@@ -69,7 +69,7 @@ const ContactUsForm = () => {
             required: true,
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Invalid email address',
+              message: 'Некорректный формат email',
             },
           }}
           render={({field}) => (
@@ -90,7 +90,7 @@ const ContactUsForm = () => {
             required: true,
             minLength: {
               value: 3,
-              message: 'Position should have at least 3 characters',
+              message: 'Поле должно содержать не менне трех символов',
             },
           }}
           render={({field}) => (

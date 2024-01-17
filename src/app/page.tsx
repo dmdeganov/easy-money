@@ -7,7 +7,8 @@ import ContactUsForm from '@/components/ContactUsForm';
 import SliderIndicator from '@/components/SliderIndicator';
 import Heading from '@/components/Heading';
 import Projects from '@/components/Projects';
-import About from "@/components/About";
+import About from '@/components/About';
+import IphoneMotion from '@/components/IphoneMotion';
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,
@@ -50,8 +51,10 @@ const Page = () => {
 
   return (
     <>
-      <Header currentSlide={currentSlide} />
+      <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
+      <IphoneMotion currentSlide={currentSlide}/>
+
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide heading" id="about">
           <Heading sliderRef={sliderRef} />

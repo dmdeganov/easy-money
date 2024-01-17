@@ -31,9 +31,15 @@ const Projects = () => {
 
   return (
     <>
-      <h2>
-        Наши <span className="text-gradient">проекты</span>
-      </h2>
+      <hgroup >
+        <h2>
+          Наши <span className="text-gradient">проекты</span>
+        </h2>
+        <div>
+          <Image src="/app-store.svg" width={120} height={120} alt="app-store"/>
+          <Image src="/playmarket.svg" width={120} height={120} alt="playmarket"/>
+        </div>
+      </hgroup>
       <motion.div
         className="projects"
         ref={ref}
