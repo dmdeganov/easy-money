@@ -1,11 +1,18 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
+
+const preloadHeavyImageForNextStep = () => {
+  const img = new Image();
+  img.src = '/iphone-motion-reverse.webm';
+};
 
 const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoSrc, setVideoSrc] = useState('iphone-motion.webm');
+  const prevSlideRef = useRef(0);
   const getAnimatedStyles = () => {
     if (currentSlide === 0) {
-      return {scale: 1.4, x: -50, rotateZ: '10deg'};
+      return {scale: 1.4, x: -50, rotateZ: '10deg', opacity: 1};
     }
     if (currentSlide === 1) {
       return {
@@ -13,32 +20,40 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
         x: -200,
         y: 100,
         rotateZ: '0deg',
+        opacity: 1,
       };
     }
-    return {opacity: 0};
+    return {scale: 1, x: -200, y: 100, rotateZ: '0deg', opacity: 0};
   };
 
   useEffect(() => {
-    const video = videoRef.current!;
-    console.log(currentSlide);
-    if (currentSlide === 0) {
-      video.currentTime = 0;
-      video.pause();
-      return;
-    }
-    if (currentSlide === 1) {
+    if (prevSlideRef.current !== currentSlide && currentSlide <= 1) {
       console.log('play');
-      video.play();
+      videoRef.current!.playbackRate = 0.75;
+      videoRef.current!.play();
+      prevSlideRef.current = currentSlide;
     }
   }, [currentSlide]);
 
+  useEffect(() => {
+    preloadHeavyImageForNextStep();
+  }, []);
+
   return (
     <motion.video
+      onAnimationComplete={() => {
+        console.log('onAnimationComplete');
+        if (currentSlide >= 1) {
+          setVideoSrc('iphone-motion-reverse.webm');
+        } else {
+          setVideoSrc('iphone-motion.webm');
+        }
+      }}
       animate={getAnimatedStyles()}
-      initial={false}
-      transition={{duration: 2, opacity: {duration: 0.1}}}
-      src="iphone-motion.webm"
-      id="iphone-motion"
+      initial={{opacity: 0}}
+      transition={{duration: 1, opacity: {duration: 0.2}}}
+      src={videoSrc}
+      className="iphone-motion"
       ref={videoRef}
       muted
     />

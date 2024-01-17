@@ -1,5 +1,7 @@
 @use 'variables' as *;
 .contact {
+  overflow: hidden;
+  position: relative;
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-template-rows: min-content 1fr;
