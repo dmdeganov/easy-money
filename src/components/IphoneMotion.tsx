@@ -28,8 +28,6 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
 
   useEffect(() => {
     if (prevSlideRef.current !== currentSlide && currentSlide <= 1) {
-      console.log('play');
-      videoRef.current!.playbackRate = 0.75;
       videoRef.current!.play();
       prevSlideRef.current = currentSlide;
     }
@@ -42,7 +40,6 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   return (
     <motion.video
       onAnimationComplete={() => {
-        console.log('onAnimationComplete');
         if (currentSlide >= 1) {
           setVideoSrc('iphone-motion-reverse.webm');
         } else {
@@ -51,7 +48,7 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
       }}
       animate={getAnimatedStyles()}
       initial={{opacity: 0}}
-      transition={{duration: 1, opacity: {duration: 0.2}}}
+      transition={{duration: 1.4, opacity: {duration: 0.2}}}
       src={videoSrc}
       className="iphone-motion"
       ref={videoRef}

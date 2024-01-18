@@ -9,7 +9,7 @@ import Heading from '@/components/Heading';
 import Projects from '@/components/Projects';
 import About from '@/components/About';
 import IphoneMotion from '@/components/IphoneMotion';
-import LaptopMotion from "@/components/LaptopMotion";
+import LaptopMotion from '@/components/LaptopMotion';
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,
@@ -54,7 +54,7 @@ const Page = () => {
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
-      <IphoneMotion currentSlide={currentSlide}/>
+      <IphoneMotion currentSlide={currentSlide} />
 
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide heading" id="about">
@@ -74,7 +74,6 @@ const Page = () => {
           <Projects />
         </section>
         <section className="main-slider__slide contact" id="contact-us">
-          <LaptopMotion currentSlide={currentSlide}/>
           <h2>
             <span className="text-gradient">Работа</span> с нами
           </h2>
@@ -85,6 +84,7 @@ const Page = () => {
           <ContactUsForm />
         </section>
       </div>
+      <LaptopMotion currentSlide={currentSlide} />
     </>
   );
 };

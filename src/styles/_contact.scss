@@ -1,7 +1,6 @@
 @use 'variables' as *;
 .contact {
   overflow: hidden;
-  position: relative;
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-template-rows: min-content 1fr;
@@ -22,7 +21,7 @@
   }
 }
 .contact-form {
-  width: 414px;
+  max-width: 414px;
   display: flex;
   flex-direction: column;
   row-gap: 24px;
