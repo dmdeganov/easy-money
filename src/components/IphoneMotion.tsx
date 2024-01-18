@@ -1,6 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 
+export const dynamic = 'force-static';
+export const revalidate = 60;
+
 const preloadHeavyImageForNextStep = () => {
   const img = new Image();
   img.src = '/iphone-motion-reverse.webm';
