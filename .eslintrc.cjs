@@ -21,6 +21,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react', 'react-hooks', 'jsx-a11y'],
   rules: {
+    '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/triple-slash-reference': 0,
     'prefer-const': 1,
     'import/no-named-as-default-member': 0,
