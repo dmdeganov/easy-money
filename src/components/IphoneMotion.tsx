@@ -4,14 +4,20 @@ import {motion} from 'framer-motion';
 export const dynamic = 'force-static';
 export const revalidate = 60;
 
+const sources = {
+  straight: 'static/iphone-motion.webm',
+  reversed: 'static/iphone-motion-reverse.webm',
+};
+
 const preloadHeavyImageForNextStep = () => {
   const img = new Image();
-  img.src = '/iphone-motion-reverse.webm';
+  img.src = sources.reversed;
 };
 
 const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoSrc, setVideoSrc] = useState('iphone-motion.webm');
+  const [isReversed, setIsReversed] = useState(false);
+
   const prevSlideRef = useRef(0);
   const getAnimatedStyles = () => {
     if (currentSlide === 0) {
@@ -44,15 +50,15 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
     <motion.video
       onAnimationComplete={() => {
         if (currentSlide >= 1) {
-          setVideoSrc('iphone-motion-reverse.webm');
+          setIsReversed(true);
         } else {
-          setVideoSrc('iphone-motion.webm');
+          setIsReversed(false);
         }
       }}
       animate={getAnimatedStyles()}
       initial={{opacity: 0}}
       transition={{duration: 1.4, opacity: {duration: 0.2}}}
-      src={videoSrc}
+      src={sources[isReversed ? 'reversed' : 'straight']}
       className="iphone-motion"
       ref={videoRef}
       muted
