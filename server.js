@@ -15,7 +15,7 @@ app.prepare().then(() => {
 
     const {file} = req.params;
     console.log(file);
-    const filePath = path.join(__dirname, 'public', file);
+    const filePath = path.join(__dirname, 'public', 'static', file);
 
     // Set cache control headers
     res.setHeader('Cache-Control', 'public, max-age=31536000'); // 1 year
