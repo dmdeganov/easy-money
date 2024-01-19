@@ -54,7 +54,7 @@ const Page = () => {
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
-      <IphoneMotion currentSlide={currentSlide} />
+      {/*<IphoneMotion currentSlide={currentSlide} />*/}
 
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide heading" id="about">
@@ -73,18 +73,28 @@ const Page = () => {
         <section className="main-slider__slide" id="projects">
           <Projects />
         </section>
+
         <section className="main-slider__slide contact" id="contact-us">
-          <h2>
-            <span className="text-gradient">Работа</span> с нами
-          </h2>
+          <hgroup>
+            <h2>
+              <span className="text-gradient">Работа</span> с нами
+            </h2>
+            <a className="contact__email" href="mailto:we@ezmoney.studio">
+              we@ezmoney.studio
+            </a>
+          </hgroup>
+
           <h3>
             Написать <span className="text-gradient">нам</span>
           </h3>
-          <p>we@ezmoney.studio</p>
+
           <ContactUsForm />
+          <p className="copyright">
+            Copyright © 2024 <b>EasyMoney Agency.</b> All Right Reserved
+          </p>
         </section>
       </div>
-      <LaptopMotion currentSlide={currentSlide} />
+      {/*<LaptopMotion currentSlide={currentSlide} />*/}
     </>
   );
 };

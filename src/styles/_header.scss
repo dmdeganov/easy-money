@@ -17,6 +17,9 @@ header {
     display: flex;
     column-gap: 32px;
   }
+  @media only screen and (max-width: 640px) {
+    height: 64px;
+  }
 }
 .link {
   cursor: pointer;
@@ -52,5 +55,8 @@ header {
     .link__underline {
       opacity: 1;
     }
+  }
+  @media only screen and (max-width: 640px) {
+    display: none;
   }
 }

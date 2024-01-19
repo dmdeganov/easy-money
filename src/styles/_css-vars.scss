@@ -24,4 +24,9 @@
   --on-surface-50: rgba(255, 255, 255, 0.5);
   --primary: #e3fd52;
   --input-error: #d32f2f;
+
+  --content-mw: min(1440px, calc(100vw - 160px));
+  @media only screen and (max-width: 640px) {
+    --content-mw: calc(100vw - 40px);
+  }
 }

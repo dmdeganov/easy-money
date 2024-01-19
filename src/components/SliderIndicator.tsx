@@ -36,9 +36,3 @@ const SliderIndicator = ({currentSlide}: {currentSlide: number}) => {
 };
 
 export default SliderIndicator;
-
-0;
-24;
-48;
-72;
-94;

@@ -1,7 +1,9 @@
 @use 'variables' as *;
+
 .contact {
   overflow: hidden;
   display: grid;
+  position: relative;
   grid-template-columns: max-content 1fr;
   grid-template-rows: min-content 1fr;
   column-gap: 195px;
@@ -11,16 +13,61 @@
     line-height: 1;
     align-self: flex-end;
   }
-  p {
+  hgroup {
+    position: relative;
+  }
+  &__email {
+    position: absolute;
+    bottom: calc(-3.2rem - 20px);
+    left: 0;
     color: $on-surface-50;
   }
+
   h3 {
     @include font(48);
     line-height: 1;
     align-self: flex-end;
   }
+  .copyright {
+    grid-column: 2/3;
+    color: $on-surface-50;
+    @include font(16);
+    letter-spacing: 0.16px;
+    b {
+      color: $on-surface;
+      font-weight: $regular;
+    }
+  }
+  @media only screen and (max-width: 640px) {
+    padding-top: 40px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, min-content) 1fr;
+    row-gap: 20px;
+
+    h2 {
+      @include font(42);
+      max-width: 130px;
+      margin-bottom: 16px;
+    }
+    &__email {
+      position: static;
+    }
+    h3 {
+      margin-top: 28px;
+      @include font(28);
+    }
+    .copyright {
+      position: absolute;
+      right: 0;
+      bottom: 12px;
+      width: 120px;
+      @include font(12);
+      justify-self: flex-end;
+    }
+  }
 }
 .contact-form {
+  grid-column: 2/3;
   max-width: 414px;
   display: flex;
   flex-direction: column;
@@ -38,5 +85,13 @@
     -webkit-text-fill-color: #fff;
     -webkit-box-shadow: 0 0 0px 1000px $surface inset;
     overflow: hidden;
+  }
+  @media only screen and (max-width: 640px) {
+    max-width: 100%;
+
+    grid-column: 1/2;
+    button {
+      height: 48px;
+    }
   }
 }

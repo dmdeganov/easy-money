@@ -13,10 +13,27 @@
     div {
       display: flex;
       gap: 3.2rem;
+    }
+    img {
+      width: 12rem;
+      height: 12rem;
+      display: block;
+    }
+  }
+  @media only screen and (max-width: 640px) {
+    //justify-content: flex-start;
+    hgroup {
+      //margin: 40px 0;
+      div {
+        column-gap: 12px;
+      }
+      h2 {
+        @include font(42);
+      }
+
       img {
-        width: 12rem;
-        height: 12rem;
-        display: block;
+        width: 84px;
+        height: 84px;
       }
     }
   }
@@ -25,6 +42,15 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
+  @media only screen and (max-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+    .project-card {
+      &:nth-child(3),
+      &:nth-child(4) {
+        display: none;
+      }
+    }
+  }
 }
 .project-card {
   background-color: $surface-container;
@@ -55,6 +81,33 @@
     place-items: center;
     span {
       @include fontRem(3.2);
+    }
+  }
+  @media only screen and (max-width: 640px) {
+    border-radius: 20px;
+    padding: 16px;
+    img {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 16px;
+    }
+    h3 {
+      @include font(18);
+      margin-bottom: 12px;
+      text-align: center;
+
+    }
+    p {
+      @include font(14);
+    }
+    &:last-of-type {
+      display: grid;
+      place-items: center;
+      span {
+        @include font(18);
+        max-width: 80px;
+        text-align: center;
+      }
     }
   }
 }

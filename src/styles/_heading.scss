@@ -1,0 +1,30 @@
+@use 'variables' as *;
+.heading {
+  display: flex;
+  flex-direction: column;
+  //justify-content: center;
+  justify-content: flex-end;
+  align-items: flex-start;
+  hgroup {
+    min-height: 403px;
+    @include font(108);
+    div {
+      overflow: hidden;
+    }
+  }
+  @media only screen and (max-width: 640px) {
+    padding-bottom: 92px;
+    hgroup {
+      min-height: 256px;
+      @include font(54);
+      div {
+        overflow: hidden;
+      }
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    hgroup {
+      @include font(50);
+    }
+  }
+}

@@ -22,6 +22,20 @@
     -webkit-text-fill-color: transparent;
     @include font(192);
   }
+  @media only screen and (max-width: 640px) {
+    &__hero {
+      top: 40px;
+      left: 0;
+      transform: unset;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+
+      h2 {
+        @include font(71);
+      }
+    }
+  }
 }
 
 .principles-slider {
@@ -40,6 +54,14 @@
       width: 100vw;
     }
   }
+  @media only screen and (max-width: 640px) {
+    &__slide {
+      &:first-of-type,
+      &:last-of-type {
+        width: 40px;
+      }
+    }
+  }
 }
 .principles-grid {
   display: grid;
@@ -48,6 +70,14 @@
   grid-template-columns: repeat(3, 620px);
   grid-gap: 48px;
   overflow: hidden;
+  @media only screen and (max-width: 640px) {
+    grid-template-columns: repeat(3, 85vw);
+    grid-template-rows: min-content;
+    grid-gap: 20px;
+    place-content: unset;
+    padding-top: 150px;
+
+  }
 }
 .principle-card {
   background: $surface-container;
@@ -76,5 +106,22 @@
   &:nth-child(3) {
     align-self: flex-end;
     grid-column: 3/4;
+  }
+  @media only screen and (max-width: 640px) {
+    padding: 16px;
+    border-radius: 20px;
+    &:nth-child(n) {
+      grid-row: unset;
+      grid-column: unset;
+      align-self: unset;
+    }
+    h3 {
+      @include font(32);
+      margin-bottom: 16px;
+    }
+    p {
+      @include font(16);
+      line-height: 120%;
+    }
   }
 }

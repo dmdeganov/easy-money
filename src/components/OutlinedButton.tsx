@@ -28,7 +28,7 @@ export const OutlinedButton: React.FC<ButtonProps> = ({
       href={href}
       sx={{
         fontFamily: `'SF Pro Text', sans-serif`,
-
+        height: '36px',
         fontSize: '16px',
         fontWeight: 400,
         textTransform: 'none',

@@ -14,6 +14,9 @@ const preloadHeavyImageForNextStep = () => {
   img.src = sources.reversed;
 };
 
+const isVideoPlaying = (video: HTMLVideoElement) =>
+  !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);
+
 const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isReversed, setIsReversed] = useState(false);
@@ -35,7 +38,19 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
     return {scale: 1, x: -200, y: 100, rotateZ: '0deg', opacity: 0};
   };
 
+  const shouldPreventChangingVideoSrcRef = useRef(false);
+
   useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (isVideoPlaying(video) && currentSlide !== prevSlideRef.current) {
+      video.pause();
+      video.currentTime = 0;
+      setIsReversed(currentSlide >= 1);
+      shouldPreventChangingVideoSrcRef.current = true;
+      return;
+    }
+    shouldPreventChangingVideoSrcRef.current = false;
     if (prevSlideRef.current !== currentSlide && currentSlide <= 1) {
       videoRef.current!.play();
       prevSlideRef.current = currentSlide;
@@ -48,12 +63,9 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
 
   return (
     <motion.video
+      onAnimationStart={() => {}}
       onAnimationComplete={() => {
-        if (currentSlide >= 1) {
-          setIsReversed(true);
-        } else {
-          setIsReversed(false);
-        }
+        if (!shouldPreventChangingVideoSrcRef.current) setIsReversed(currentSlide >= 1);
       }}
       animate={getAnimatedStyles()}
       initial={{opacity: 0}}

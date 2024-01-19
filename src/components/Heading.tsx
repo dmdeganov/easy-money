@@ -5,7 +5,8 @@ import {motion, useInView} from 'framer-motion';
 const Heading = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
   const [variant, setVariant] = useState<'inView' | 'outsideView'>('outsideView');
   const hgroupRef = useRef<HTMLElement>(null);
-  const isInView = useInView(hgroupRef, {margin: '-50% 0px 0px 0px', root: sliderRef});
+  // const isInView = useInView(hgroupRef, {margin: '-50% 0px 0px 0px', root: sliderRef});
+  const isInView = useInView(hgroupRef, {root: sliderRef});
 
   const container = {
     outsideView: {opacity: 0, transition: {duration: 0.1, when: 'beforeChildren'}},

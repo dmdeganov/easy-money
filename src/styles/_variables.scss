@@ -10,7 +10,7 @@ $medium: var(--medium);
 $semibold: var(--semibold);
 $bold: var(--bold);
 
-$content-mw: min(1440px, calc(100vw - 160px));
+$content-mw: var(--content-mw);
 //$content-mw: calc(100vw - 160px);
 
 @mixin font($size) {
