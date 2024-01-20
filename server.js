@@ -10,12 +10,12 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
-  server.get('/static/:file', (req, res) => {
+  server.get('/static/iphone/:file', (req, res) => {
     console.log('static file requested');
 
     const {file} = req.params;
     console.log(file);
-    const filePath = path.join(__dirname, 'public', 'static', file);
+    const filePath = path.join(__dirname, 'public', 'static', 'iphone', file);
 
     // Set cache control headers
     res.setHeader('Cache-Control', 'public, max-age=31536000'); // 1 year

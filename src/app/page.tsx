@@ -54,7 +54,7 @@ const Page = () => {
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
-      {/*<IphoneMotion currentSlide={currentSlide} />*/}
+      <IphoneMotion currentSlide={currentSlide} />
 
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide heading" id="about">

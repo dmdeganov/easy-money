@@ -1,25 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
+import {Button} from '@mui/material';
 
-export const dynamic = 'force-static';
-export const revalidate = 60;
+const frameCount = 120;
+const getFrameSrc = (index: number) => `static/iphone/${index.toString().padStart(4, '0')}-min.png`;
 
-const sources = {
-  straight: 'static/iphone-motion.webm',
-  reversed: 'static/iphone-motion-reverse.webm',
+const preloadImages = () => {
+  for (let i = 1; i < frameCount; i++) {
+    const img = new Image();
+    img.src = getFrameSrc(i);
+  }
 };
+const imageWidth = 360;
+const imageHeight = 326;
+const imageSize = 1920;
+const animationDuration = 2000;
 
-const preloadHeavyImageForNextStep = () => {
-  const img = new Image();
-  img.src = sources.reversed;
-};
-
-const isVideoPlaying = (video: HTMLVideoElement) =>
-  !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);
+const fps = animationDuration / frameCount;
 
 const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isReversed, setIsReversed] = useState(false);
+  const imgRef = useRef<HTMLDivElement>(null);
 
   const prevSlideRef = useRef(0);
   const getAnimatedStyles = () => {
@@ -41,40 +41,68 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   const shouldPreventChangingVideoSrcRef = useRef(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (isVideoPlaying(video) && currentSlide !== prevSlideRef.current) {
-      video.pause();
-      video.currentTime = 0;
-      setIsReversed(currentSlide >= 1);
-      shouldPreventChangingVideoSrcRef.current = true;
-      return;
-    }
-    shouldPreventChangingVideoSrcRef.current = false;
-    if (prevSlideRef.current !== currentSlide && currentSlide <= 1) {
-      videoRef.current!.play();
-      prevSlideRef.current = currentSlide;
-    }
-  }, [currentSlide]);
-
-  useEffect(() => {
-    preloadHeavyImageForNextStep();
+    imgRef.current!.style.backgroundImage = `url(${getFrameSrc(1)})`;
   }, []);
 
+  const animationStartedAtRef = useRef(0);
+  const isForwardDirectionRef = useRef(true);
+  const currentFrameRef = useRef(1);
+
+  const drawFrame = () => {
+    if (isForwardDirectionRef.current) {
+      requestAnimationFrame(() => {
+        const time = Date.now();
+        const timePassed = time - animationStartedAtRef.current;
+        const actualFrame = Math.ceil(timePassed / fps);
+        // console.log(timePassed, actualFrame);
+        if (actualFrame <= 119) {
+          if (actualFrame === currentFrameRef.current) {
+            drawFrame();
+            return;
+          }
+          currentFrameRef.current = actualFrame;
+          imgRef.current!.style.backgroundImage = imgRef.current!.style.backgroundImage = `url(${getFrameSrc(
+            actualFrame,
+          )})`;
+
+          drawFrame();
+        } else {
+          return;
+        }
+      });
+    }
+  };
+
+  const playForward = () => {
+    animationStartedAtRef.current = Date.now();
+    drawFrame();
+  };
+
+  useEffect(() => {
+    preloadImages();
+  }, []);
+
+  // 644, 271
+
   return (
-    <motion.video
-      onAnimationStart={() => {}}
-      onAnimationComplete={() => {
-        if (!shouldPreventChangingVideoSrcRef.current) setIsReversed(currentSlide >= 1);
-      }}
-      animate={getAnimatedStyles()}
-      initial={{opacity: 0}}
-      transition={{duration: 1.4, opacity: {duration: 0.2}}}
-      src={sources[isReversed ? 'reversed' : 'straight']}
-      className="iphone-motion"
-      ref={videoRef}
-      muted
-    />
+    <>
+      <Button
+        onClick={() => {
+          playForward();
+        }}
+      >
+        start
+      </Button>
+      <motion.div
+        style={{width: '672.5px', aspectRatio: 1}}
+        ref={imgRef}
+        // animate={getAnimatedStyles()}
+        // initial={{opacity: 0}}
+        // transition={{duration: 1.4, opacity: {duration: 0.2}}}
+        className="iphone-motion"
+        id="iphone-motion"
+      />
+    </>
   );
 };
 

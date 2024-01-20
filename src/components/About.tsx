@@ -7,8 +7,6 @@ const About = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
   // const isInView = useInView(ref, {margin: '-50% 0px 0px 0px', root: sliderRef});
   const isInView = useInView(ref, {root: sliderRef});
 
-  console.log({isInView, })
-
   const container = {
     outsideView: {opacity: 0, transition: {duration: 0.1, when: 'beforeChildren'}},
     inView: {
