@@ -39,11 +39,11 @@ const Heading = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
 
   return (
     <motion.hgroup initial="outsideView" animate={variant} ref={hgroupRef} variants={container}>
-      <motion.div variants={item} className="text-gradient">
-        Студия
-      </motion.div>
-      <motion.div variants={item}>Мобильной разработки</motion.div>
-      <motion.div variants={item}>Полного цикла</motion.div>
+      {/*<motion.div variants={item} className="text-gradient">*/}
+      {/*  Студия*/}
+      {/*</motion.div>*/}
+      {/*<motion.div variants={item}>Мобильной разработки</motion.div>*/}
+      {/*<motion.div variants={item}>Полного цикла</motion.div>*/}
     </motion.hgroup>
   );
 };
