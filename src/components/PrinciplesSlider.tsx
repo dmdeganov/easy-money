@@ -9,13 +9,16 @@ import {
   useMotionValue,
 } from 'framer-motion';
 
-let timeoutId = 0;
+const timeoutId = 0;
 
 const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: number) => void}) => {
   const ref = useRef<HTMLDivElement>(null);
   const {scrollXProgress} = useScroll({
     container: ref,
   });
+  const xAcceleration = useVelocity(scrollXProgress);
+  const cardScale = useTransform(xAcceleration, [-1, -0.1, 0, 0.1, 1], [0.85, 1, 1, 1, 0.85]);
+  console.log(xAcceleration.on('change', console.log));
 
   const scrollXSpringed = useSpring(scrollXProgress, {
     stiffness: 80,
@@ -52,18 +55,18 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
     ref.current!.addEventListener('wheel', eventWheel);
   }, []);
 
-  const [scaleCard, setScaleCard] = useState(1);
+  // const [scaleCard, setScaleCard] = useState(1);
 
-  useMotionValueEvent(scrollXProgress, 'change', () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    setScaleCard(0.95);
-    timeoutId = window.setTimeout(() => {
-      setScaleCard(1);
-      timeoutId = 0;
-    }, 100);
-  });
+  // useMotionValueEvent(scrollXProgress, 'change', () => {
+  //   if (timeoutId) {
+  //     clearTimeout(timeoutId);
+  //   }
+  //   setScaleCard(0.95);
+  //   timeoutId = window.setTimeout(() => {
+  //     setScaleCard(1);
+  //     timeoutId = 0;
+  //   }, 100);
+  // });
 
   return (
     <div className="principles">
@@ -75,14 +78,14 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
       <div className="principles-slider" ref={ref}>
         <div className="principles-slider__slide" />
         <div className="principles-slider__slide principles-grid">
-          <motion.div className="principle-card" animate={{scale: scaleCard}}>
+          <motion.div className="principle-card" style={{scale: cardScale}}>
             <h3>Просто</h3>
             <p>
               <span className="text-primary">Наш фокус</span> – создание мобильных приложений, которые не только легки в
               использовании, но и несут огромную пользу для миллионов пользователей по всему миру.
             </p>
           </motion.div>
-          <motion.div className="principle-card" animate={{scale: scaleCard}}>
+          <motion.div className="principle-card" style={{scale: cardScale}}>
             <h3>Современно</h3>
             <p>
               <span className="text-primary">Будущее </span> – за гибкими рабочими моделями. Наша удаленная рабочая
@@ -90,7 +93,7 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
               вносить свой вклад из любой точки мира.
             </p>
           </motion.div>
-          <motion.div className="principle-card" animate={{scale: scaleCard}}>
+          <motion.div className="principle-card" style={{scale: cardScale}}>
             <h3>Успешно</h3>
             <p>
               <span className="text-primary">Финансовый Успех</span> – часть нашей ДНК! Мы понимаем, что успех в

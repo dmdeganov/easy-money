@@ -25,17 +25,17 @@ const fps = animationDuration / frameCount;
 
 const getAnimatedStyles = (currentSlide: number) => {
   switch (currentSlide) {
-  case 0:
-    return {scale: 1.4, x: -50, opacity: 1};
-  case 1:
-    return {
-      scale: 1.4,
-      x: -300,
-      y: 100,
-      opacity: 1,
-    };
-  default:
-    return {scale: 1, x: -200, y: 100, opacity: 0};
+    case 0:
+      return {scale: 1.4, x: -50, opacity: 1};
+    case 1:
+      return {
+        scale: 1.4,
+        x: -300,
+        y: 100,
+        opacity: 1,
+      };
+    default:
+      return {scale: 1.4, opacity: 0, x: -300, y: 100};
   }
 };
 
@@ -70,7 +70,6 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
         drawNextFrame();
         counter.current++;
       } else {
-        console.log(counter.current);
         prevCounter.current = counter.current;
         counter.current = 0;
         set_(prev => prev + 1);
@@ -97,9 +96,13 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   useEffect(() => {
     const img = imgRef.current!;
     img.src = getFrameSrc(1);
-    img.onload = () => {
-      img.style.opacity = '1';
-    };
+    img.addEventListener(
+      'load',
+      () => {
+        img.style.opacity = '1';
+      },
+      {once: true},
+    );
   }, []);
 
   useEffect(() => {
@@ -113,6 +116,7 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
 
+  console.log(getAnimatedStyles(currentSlide).opacity);
   return (
     <>
       <motion.div id="frame-counter" animate={{opacity: currentSlide > 1 ? 0 : 1}} initial={false}>
