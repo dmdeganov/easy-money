@@ -7,10 +7,9 @@ const LaptopMotion = ({currentSlide}: {currentSlide: number}) => {
   const prevSlideRef = useRef(0);
 
   useEffect(() => {
-    console.log('useEffect currentSlide', currentSlide);
     if (currentSlide === 3 && prevSlideRef.current === 4) {
-      videoRef.current!.playbackRate = 2;
-      videoRef.current!.play();
+      // videoRef.current!.playbackRate = 2;
+      // videoRef.current!.play();
     }
     if (currentSlide === 4) {
       // if (videoSrc === 'laptop-motion-reverse.webm') {
@@ -27,19 +26,18 @@ const LaptopMotion = ({currentSlide}: {currentSlide: number}) => {
 
   return (
     <motion.video
-      onAnimationComplete={() => {
-        console.log('onAnimationComplete', currentSlide, videoSrc);
-        if (currentSlide === 4) {
-          console.log("setVideoSrc('laptop-motion-reverse.webm')")
-          setVideoSrc('laptop-motion-reverse.webm');
-        } else {
-          setVideoSrc('laptop-motion.webm');
-          console.log("setVideoSrc('laptop-motion.webm')")
-        }
-      }}
+      // onAnimationComplete={() => {
+      //   if (currentSlide === 4) {
+      //     console.log("setVideoSrc('laptop-motion-reverse.webm')")
+      //     setVideoSrc('laptop-motion-reverse.webm');
+      //   } else {
+      //     setVideoSrc('laptop-motion.webm');
+      //     console.log("setVideoSrc('laptop-motion.webm')")
+      //   }
+      // }}
       animate={{opacity: currentSlide === 4 ? 1 : 0}}
       initial={{opacity: 0}}
-      transition={{duration: currentSlide === 4 ? 1.6 : 1}}
+      transition={{duration: currentSlide === 4 ? 1.6 : 0.3}}
       src={videoSrc}
       className="laptop-motion"
       ref={videoRef}

@@ -1,8 +1,9 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 import {Button} from '@mui/material';
 
 const frameCount = 120;
+
 const getFrameSrc = (index: number) => `iphone/${index.toString().padStart(4, '0')}-min.png`;
 
 const preloadImages = () => {
@@ -18,94 +19,111 @@ const preloadImages = () => {
   }
 };
 
-let counter = 0;
-
 const animationDuration = 2000;
 
 const fps = animationDuration / frameCount;
 
+const getAnimatedStyles = (currentSlide: number) => {
+  switch (currentSlide) {
+  case 0:
+    return {scale: 1.4, x: -50, opacity: 1};
+  case 1:
+    return {
+      scale: 1.4,
+      x: -300,
+      y: 100,
+      opacity: 1,
+    };
+  default:
+    return {scale: 1, x: -200, y: 100, opacity: 0};
+  }
+};
+
 const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   const imgRef = useRef<HTMLImageElement>(null);
+  const prevSlideRef = useRef(currentSlide);
+  const [_, set_] = useState(0);
 
-  const prevSlideRef = useRef(0);
-  const getAnimatedStyles = () => {
-    if (currentSlide === 0) {
-      return {scale: 1.4, x: -250, opacity: 1};
-    }
-    if (currentSlide === 1) {
-      return {
-        scale: 1.4,
-        x: -400,
-        y: 100,
-        rotateZ: '0deg',
-        opacity: 1,
-      };
-    }
-    return {scale: 1, x: -200, y: 100, opacity: 0};
-  };
-
-  const shouldPreventChangingVideoSrcRef = useRef(false);
-
-  useEffect(() => {
-    const img = imgRef.current!;
-    img.src = getFrameSrc(1);
-  }, []);
-
-  const animationStartedAtRef = useRef(0);
+  const animationStartedAtRef = useRef({time: 0, frame: 0});
   const isForwardDirectionRef = useRef(true);
-  const currentFrameRef = useRef(1);
+  const prevFrameRef = useRef(1);
+  const isNewSequenceRef = useRef(false);
+  const counter = useRef(0);
+  const prevCounter = useRef(0);
 
-  const drawFrame = () => {
-    if (isForwardDirectionRef.current) {
-      requestAnimationFrame(() => {
-        const time = Date.now();
-        const timePassed = time - animationStartedAtRef.current;
-        const actualFrame = Math.ceil(timePassed / fps);
-        if (actualFrame <= 119) {
-          if (actualFrame === currentFrameRef.current) {
-            drawFrame();
-            return;
-          }
-          currentFrameRef.current = actualFrame;
-          imgRef.current!.src = getFrameSrc(actualFrame);
-          drawFrame();
-          counter++;
-        } else {
-          console.log(counter);
-          counter = 0;
-          return;
-        }
-      });
-    }
+  const drawNextFrame = () => {
+    requestAnimationFrame(time => {
+      if (isNewSequenceRef.current) {
+        animationStartedAtRef.current = {time, frame: prevFrameRef.current};
+        isNewSequenceRef.current = false;
+      }
+      const framesPassed = time - animationStartedAtRef.current.time;
+      const actualFrame =
+        animationStartedAtRef.current.frame + Math.ceil(framesPassed / fps) * (isForwardDirectionRef.current ? 1 : -1);
+      if (actualFrame === prevFrameRef.current) {
+        drawNextFrame();
+        return;
+      }
+      if (actualFrame >= 1 && actualFrame <= 120) {
+        prevFrameRef.current = actualFrame;
+        imgRef.current!.src = getFrameSrc(actualFrame);
+        drawNextFrame();
+        counter.current++;
+      } else {
+        console.log(counter.current);
+        prevCounter.current = counter.current;
+        counter.current = 0;
+        set_(prev => prev + 1);
+        return;
+      }
+    });
   };
 
   const playForward = () => {
-    animationStartedAtRef.current = Date.now();
-    drawFrame();
+    isNewSequenceRef.current = true;
+    isForwardDirectionRef.current = true;
+    drawNextFrame();
+  };
+  const playReverse = () => {
+    isNewSequenceRef.current = true;
+    isForwardDirectionRef.current = false;
+    drawNextFrame();
   };
 
   useEffect(() => {
     preloadImages();
   }, []);
 
-  // 644, 271
+  useEffect(() => {
+    const img = imgRef.current!;
+    img.src = getFrameSrc(1);
+    img.onload = () => {
+      img.style.opacity = '1';
+    };
+  }, []);
+
+  useEffect(() => {
+    if (currentSlide === prevSlideRef.current) return;
+    if (prevSlideRef.current === 0 && currentSlide === 1) {
+      playForward();
+    }
+    if (prevSlideRef.current === 1 && currentSlide === 0) {
+      playReverse();
+    }
+    prevSlideRef.current = currentSlide;
+  }, [currentSlide]);
 
   return (
     <>
-      <Button
-        onClick={() => {
-          playForward();
-        }}
-      >
-        start
-      </Button>
+      <motion.div id="frame-counter" animate={{opacity: currentSlide > 1 ? 0 : 1}} initial={false}>
+        {prevCounter.current}
+      </motion.div>
       <motion.img
         height="100%"
-        style={{width: '672.5px', aspectRatio: 1, display: 'block'}}
         ref={imgRef}
-        animate={getAnimatedStyles()}
-        // initial={{opacity: 0}}
-        // transition={{duration: 1.4, opacity: {duration: 0.2}}}
+        animate={getAnimatedStyles(currentSlide)}
+        initial={{scale: 1, opacity: 0}}
+        transition={{duration: 1.4, opacity: {duration: 0.2}}}
         className="iphone-motion"
         id="iphone-motion"
       />

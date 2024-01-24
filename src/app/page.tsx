@@ -94,7 +94,7 @@ const Page = () => {
           </p>
         </section>
       </div>
-      {/*<LaptopMotion currentSlide={currentSlide} />*/}
+      <LaptopMotion currentSlide={currentSlide} />
     </>
   );
 };
