@@ -4,7 +4,7 @@ import {Button} from '@mui/material';
 
 const frameCount = 120;
 
-const getFrameSrc = (index: number) => `iphone/${index.toString().padStart(4, '0')}-min.png`;
+const getFrameSrc = (index: number) => `iphone/${(index + 1).toString().padStart(4, '0')}-min.png`;
 
 const preloadImages = () => {
   for (let i = 1; i < frameCount; i++) {
@@ -61,7 +61,7 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
         drawNextFrame();
         return;
       }
-      if (actualFrame >= 1 && actualFrame <= 120) {
+      if (actualFrame >= 1 && actualFrame <= 119) {
         prevFrameRef.current = actualFrame;
         imgRef.current!.src = getFrameSrc(actualFrame);
         drawNextFrame();
