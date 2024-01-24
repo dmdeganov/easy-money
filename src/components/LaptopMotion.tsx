@@ -1,47 +1,109 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 
+const frameCount = 97;
+const animationDuration = 1600;
+
+const fps = animationDuration / frameCount;
+
+const getFrameSrc = (index: number) => `laptop/${(index + 6).toString().padStart(4, '0')}.png`;
+
+const preloadImages = () => {
+  for (let i = 1; i < frameCount; i++) {
+    const img = new Image();
+    img.width = 0;
+    img.height = 0;
+    img.src = getFrameSrc(i);
+    document.body.appendChild(img);
+  }
+};
+
 const LaptopMotion = ({currentSlide}: {currentSlide: number}) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoSrc, setVideoSrc] = useState('laptop-motion.webm');
-  const prevSlideRef = useRef(0);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const prevSlideRef = useRef(currentSlide);
+  const [_, set_] = useState(0);
+
+  const animationStartedAtRef = useRef({time: 0, frame: 0});
+  const isForwardDirectionRef = useRef(true);
+  const prevFrameRef = useRef(1);
+  const isNewSequenceRef = useRef(false);
+  const counter = useRef(0);
+  const prevCounter = useRef(0);
+
+  const drawNextFrame = () => {
+    requestAnimationFrame(time => {
+      if (isNewSequenceRef.current) {
+        animationStartedAtRef.current = {time, frame: prevFrameRef.current};
+        isNewSequenceRef.current = false;
+      }
+      const framesPassed = time - animationStartedAtRef.current.time;
+      const actualFrame =
+        animationStartedAtRef.current.frame + Math.ceil(framesPassed / fps) * (isForwardDirectionRef.current ? 1 : -1);
+      if (actualFrame === prevFrameRef.current) {
+        drawNextFrame();
+        return;
+      }
+      console.log(actualFrame);
+      if (actualFrame >= 1 && actualFrame <= frameCount) {
+        prevFrameRef.current = actualFrame;
+        imgRef.current!.src = getFrameSrc(actualFrame);
+        drawNextFrame();
+        counter.current++;
+      } else {
+        prevCounter.current = counter.current;
+        counter.current = 0;
+        set_(prev => prev + 1);
+        return;
+      }
+    });
+  };
 
   useEffect(() => {
-    if (currentSlide === 3 && prevSlideRef.current === 4) {
-      // videoRef.current!.playbackRate = 2;
-      // videoRef.current!.play();
+    preloadImages();
+  }, []);
+
+  useEffect(() => {
+    const img = imgRef.current!;
+    img.src = getFrameSrc(50);
+    img.addEventListener(
+      'load',
+      () => {
+        // img.style.opacity = '1';
+      },
+      {once: true},
+    );
+  }, []);
+
+  const playForward = () => {
+    isNewSequenceRef.current = true;
+    isForwardDirectionRef.current = true;
+    drawNextFrame();
+  };
+  const playReverse = () => {
+    isNewSequenceRef.current = true;
+    isForwardDirectionRef.current = false;
+    drawNextFrame();
+  };
+
+  useEffect(() => {
+    if (currentSlide === prevSlideRef.current) return;
+    if (prevSlideRef.current === 3 && currentSlide === 4) {
+      playForward();
     }
-    if (currentSlide === 4) {
-      // if (videoSrc === 'laptop-motion-reverse.webm') {
-      //   setVideoSrc('laptop-motion.webm');
-      //   videoRef.current!.play();
-      //   return;
-      // }
-      videoRef.current!.play();
+    if (prevSlideRef.current === 4 && currentSlide === 3) {
+      playReverse();
     }
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
 
-  // console.log('videoSrc', videoSrc);
-
   return (
-    <motion.video
-      // onAnimationComplete={() => {
-      //   if (currentSlide === 4) {
-      //     console.log("setVideoSrc('laptop-motion-reverse.webm')")
-      //     setVideoSrc('laptop-motion-reverse.webm');
-      //   } else {
-      //     setVideoSrc('laptop-motion.webm');
-      //     console.log("setVideoSrc('laptop-motion.webm')")
-      //   }
-      // }}
+    <motion.img
+      height="100%"
+      ref={imgRef}
       animate={{opacity: currentSlide === 4 ? 1 : 0}}
       initial={{opacity: 0}}
-      transition={{duration: currentSlide === 4 ? 1.6 : 0.3}}
-      src={videoSrc}
+      transition={{duration: 1.6}}
       className="laptop-motion"
-      ref={videoRef}
-      muted
     />
   );
 };

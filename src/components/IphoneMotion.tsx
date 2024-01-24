@@ -11,9 +11,6 @@ const preloadImages = () => {
     const img = new Image();
     img.width = 0;
     img.height = 0;
-
-    // Add the id attribute to the <img> element
-    img.id = `iphone-${i}`;
     img.src = getFrameSrc(i);
     document.body.appendChild(img);
   }

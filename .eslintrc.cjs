@@ -44,7 +44,7 @@ module.exports = {
         html: true,
       },
     ],
-    indent: ['error', 2],
+    indent: ['error', 2, {SwitchCase: 1}],
     'react/no-unescaped-entities': 0,
   },
 };

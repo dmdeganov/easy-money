@@ -1,29 +1,31 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  useVelocity,
-  useMotionValueEvent,
-  useMotionValue,
-} from 'framer-motion';
+import {motion, useScroll, useTransform, useSpring} from 'framer-motion';
 
-const timeoutId = 0;
+let timeoutId = 0;
 
-const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: number) => void}) => {
+const PrinciplesSlider = () => {
   const ref = useRef<HTMLDivElement>(null);
   const {scrollXProgress} = useScroll({
     container: ref,
   });
-  const xAcceleration = useVelocity(scrollXProgress);
-  const cardScale = useTransform(xAcceleration, [-1, -0.1, 0, 0.1, 1], [0.85, 1, 1, 1, 0.85]);
-  console.log(xAcceleration.on('change', console.log));
 
   const scrollXSpringed = useSpring(scrollXProgress, {
     stiffness: 80,
     damping: 30,
     restDelta: 0.001,
+  });
+
+  const [scaleCard, setScaleCard] = useState(1);
+
+  scrollXProgress.on('change', () => {
+    setScaleCard(0.95);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = window.setTimeout(() => {
+      setScaleCard(1);
+      clearTimeout(timeoutId);
+    }, 150);
   });
 
   const backgroundSize = useTransform(scrollXSpringed, [0, 0.5, 1], ['0%', '100%', '0%']);
@@ -55,19 +57,6 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
     ref.current!.addEventListener('wheel', eventWheel);
   }, []);
 
-  // const [scaleCard, setScaleCard] = useState(1);
-
-  // useMotionValueEvent(scrollXProgress, 'change', () => {
-  //   if (timeoutId) {
-  //     clearTimeout(timeoutId);
-  //   }
-  //   setScaleCard(0.95);
-  //   timeoutId = window.setTimeout(() => {
-  //     setScaleCard(1);
-  //     timeoutId = 0;
-  //   }, 100);
-  // });
-
   return (
     <div className="principles">
       <div className="principles__hero">
@@ -78,14 +67,14 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
       <div className="principles-slider" ref={ref}>
         <div className="principles-slider__slide" />
         <div className="principles-slider__slide principles-grid">
-          <motion.div className="principle-card" style={{scale: cardScale}}>
+          <motion.div className="principle-card" animate={{scale: scaleCard}} transition={{duration: 0.1}}>
             <h3>Просто</h3>
             <p>
               <span className="text-primary">Наш фокус</span> – создание мобильных приложений, которые не только легки в
               использовании, но и несут огромную пользу для миллионов пользователей по всему миру.
             </p>
           </motion.div>
-          <motion.div className="principle-card" style={{scale: cardScale}}>
+          <motion.div className="principle-card" animate={{scale: scaleCard}} transition={{duration: 0.1}}>
             <h3>Современно</h3>
             <p>
               <span className="text-primary">Будущее </span> – за гибкими рабочими моделями. Наша удаленная рабочая
@@ -93,7 +82,7 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
               вносить свой вклад из любой точки мира.
             </p>
           </motion.div>
-          <motion.div className="principle-card" style={{scale: cardScale}}>
+          <motion.div className="principle-card" animate={{scale: scaleCard}} transition={{duration: 0.1}}>
             <h3>Успешно</h3>
             <p>
               <span className="text-primary">Финансовый Успех</span> – часть нашей ДНК! Мы понимаем, что успех в
