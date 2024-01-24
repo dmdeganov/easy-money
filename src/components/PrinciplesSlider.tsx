@@ -18,7 +18,7 @@ const PrinciplesSlider = ({scrollMainSlider}: {scrollMainSlider: (x: number, y: 
   });
   const xAcceleration = useVelocity(scrollXProgress);
   const cardScale = useTransform(xAcceleration, [-1, -0.1, 0, 0.1, 1], [0.85, 1, 1, 1, 0.85]);
-  // console.log(xAcceleration.on('change', console.log));
+  console.log(xAcceleration.on('change', console.log));
 
   const scrollXSpringed = useSpring(scrollXProgress, {
     stiffness: 80,

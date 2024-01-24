@@ -4,11 +4,7 @@ import {Button} from '@mui/material';
 
 const frameCount = 120;
 
-// const getFrameSrc = (index: number) => `iphone/${index.toString().padStart(4, '0')}-min.png`;
-const getFrameSrc = (index: number) =>
-  `https://www.apple.com/105/media/us/airpods-pro/2019/1299e2f5_9206_4470_b28e_08307a42f19b/anim/sequence/large/01-hero-lightpass/${index
-    .toString()
-    .padStart(4, '0')}.jpg`;
+const getFrameSrc = (index: number) => `iphone/${index.toString().padStart(4, '0')}-min.png`;
 
 const preloadImages = () => {
   for (let i = 1; i < frameCount; i++) {
@@ -28,19 +24,18 @@ const animationDuration = 2000;
 const fps = animationDuration / frameCount;
 
 const getAnimatedStyles = (currentSlide: number) => {
-  return {scale: 1.4, x: -50, opacity: 1};
   switch (currentSlide) {
-  case 0:
-    return {scale: 1.4, x: -50, opacity: 1};
-  case 1:
-    return {
-      scale: 1.4,
-      x: -300,
-      y: 100,
-      opacity: 1,
-    };
-  default:
-    return {scale: 1.4, opacity: 0, x: -300, y: 100};
+    case 0:
+      return {scale: 1.4, x: -50, opacity: 1};
+    case 1:
+      return {
+        scale: 1.4,
+        x: -300,
+        y: 100,
+        opacity: 1,
+      };
+    default:
+      return {scale: 1.4, opacity: 0, x: -300, y: 100};
   }
 };
 
