@@ -23,7 +23,7 @@
     }
   }
   #principles {
-    margin: 0 calc(-1 * (100vw - #{$content-mw}));
+    margin: 0 calc(-1 * (100vw - #{$content-mw}) / 2);
   }
 
   h1,
