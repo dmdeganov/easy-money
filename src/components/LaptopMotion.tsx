@@ -1,5 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
+import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 
 const frameCount = 97;
 const animationDuration = 1600;
@@ -18,10 +19,22 @@ const preloadImages = () => {
   }
 };
 
+const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
+  if (isMobileWidth) {
+    return {
+      opacity: currentSlide === 4 ? 1 : 0,
+      x: '15%',
+    };
+  } else {
+    return {opacity: currentSlide === 4 ? 1 : 0};
+  }
+};
+
 const LaptopMotion = ({currentSlide}: {currentSlide: number}) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const prevSlideRef = useRef(currentSlide);
   const [_, set_] = useState(0);
+  const {isMobileWidth} = useContext(WindowSizeContext);
 
   const animationStartedAtRef = useRef({time: 0, frame: 0});
   const isForwardDirectionRef = useRef(true);
@@ -43,7 +56,6 @@ const LaptopMotion = ({currentSlide}: {currentSlide: number}) => {
         drawNextFrame();
         return;
       }
-      console.log(actualFrame);
       if (actualFrame >= 1 && actualFrame <= frameCount) {
         prevFrameRef.current = actualFrame;
         imgRef.current!.src = getFrameSrc(actualFrame);
@@ -100,7 +112,7 @@ const LaptopMotion = ({currentSlide}: {currentSlide: number}) => {
     <motion.img
       height="100%"
       ref={imgRef}
-      animate={{opacity: currentSlide === 4 ? 1 : 0}}
+      animate={getAnimatedStyles(currentSlide, isMobileWidth)}
       initial={{opacity: 0}}
       transition={{duration: 1.6}}
       className="laptop-motion"

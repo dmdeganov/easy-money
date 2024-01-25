@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {motion, useInView} from 'framer-motion';
+import React, {useRef} from 'react';
+import {motion} from 'framer-motion';
 
-const About = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
-  const [variant, setVariant] = useState<'inView' | 'outsideView'>('outsideView');
+const About = ({isVisible}: {isVisible: boolean}) => {
+  // const [variant, setVariant] = useState<'inView' | 'outsideView'>('outsideView');
   const ref = useRef<HTMLParagraphElement>(null);
   // const isInView = useInView(ref, {margin: '-50% 0px 0px 0px', root: sliderRef});
-  const isInView = useInView(ref, {root: sliderRef, margin: '50px 0px'});
+  // const isInView = useInView(ref, {root: sliderRef, margin: '50px 0px'});
   const container = {
     outsideView: {opacity: 0, transition: {duration: 0.1, when: 'beforeChildren'}},
     inView: {
@@ -27,33 +27,42 @@ const About = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
     },
   };
 
-  useEffect(() => {
-    if (isInView) {
-      setVariant('inView');
-    } else {
-      setVariant('outsideView');
-    }
-  }, [isInView]);
+  // useEffect(() => {
+  //   if (isInView) {
+  //     setVariant('inView');
+  //   } else {
+  //     setVariant('outsideView');
+  //   }
+  // }, [isInView]);
 
   return (
-    <motion.div className="about__details" ref={ref} variants={container} initial="inView" animate={variant}>
-      <motion.span variants={item}>
-        Маленькая <span className="text-gradient">студия</span>
-      </motion.span>
-      <motion.span variants={item}>
-        <span className="text-gradient">c большими</span> идеями
-      </motion.span>
-      <motion.span variants={item}>и огромными</motion.span>
-      <motion.span variants={item}>
-        <span className="text-gradient">возможностями.</span>
-      </motion.span>
-      <motion.p className="about__goal" variants={item}>
-        Наша цель – <span className="text-primary">№1</span> в категории <span className="text-primary">Утилиты.</span>
-      </motion.p>
-      <motion.p className="about__bottom" variants={item}>
-        <span>Быстро. Легко. Успешно.</span>
-      </motion.p>
-    </motion.div>
+    <div className="about">
+      <motion.div
+        className="about__details"
+        ref={ref}
+        variants={container}
+        initial="inView"
+        animate={isVisible ? 'inView' : 'outsideView'}
+      >
+        <motion.span variants={item}>
+          Маленькая <span className="text-gradient">студия</span>
+        </motion.span>
+        <motion.span variants={item}>
+          <span className="text-gradient">c большими</span> идеями
+        </motion.span>
+        <motion.span variants={item}>и огромными</motion.span>
+        <motion.span variants={item}>
+          <span className="text-gradient">возможностями.</span>
+        </motion.span>
+        <motion.p className="about__goal" variants={item}>
+          Наша цель – <span className="text-primary">№1</span> в категории{' '}
+          <span className="text-primary">Утилиты.</span>
+        </motion.p>
+        <motion.p className="about__bottom" variants={item}>
+          <span>Быстро. Легко. Успешно.</span>
+        </motion.p>
+      </motion.div>
+    </div>
   );
 };
 

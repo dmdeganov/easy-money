@@ -1,5 +1,5 @@
 'use client';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Header from '@/components/Header';
 import PrinciplesSlider from '@/components/PrinciplesSlider';
 import {useScroll, useMotionValueEvent} from 'framer-motion';
@@ -30,12 +30,12 @@ const Page = () => {
     const direction = scrollY > prevScrollY.current ? 'down' : 'up';
     if (direction === 'down') {
       if (scrollY > scrollYMap[currentSlide] + threshold) {
-        setCurrentSlide(prev => prev + 1);
+        setCurrentSlide(prev => Math.min(4, prev + 1));
       }
     }
     if (direction === 'up') {
       if (scrollY < scrollYMap[currentSlide] - threshold) {
-        setCurrentSlide(prev => prev - 1);
+        setCurrentSlide(prev => Math.max(0, prev - 1));
       }
     }
     prevScrollY.current = scrollY;
@@ -50,51 +50,47 @@ const Page = () => {
     }
   };
 
+  console.log({currentSlide});
   return (
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
-      <IphoneMotion currentSlide={currentSlide} />
+      {/*<IphoneMotion currentSlide={currentSlide} />*/}
 
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
-        <section className="main-slider__slide heading" id="about">
+        <section className="main-slider__slide" id="about">
           <Heading sliderRef={sliderRef} />
         </section>
-        <section className="main-slider__slide about">
-          <About sliderRef={sliderRef} />
+        <section className="main-slider__slide">
+          <About isVisible={currentSlide === 1} />
         </section>
         <section className="main-slider__slide" id="principles">
-          <PrinciplesSlider
-            scrollMainSlider={(x: number, y: number) => {
-              sliderRef.current?.scrollBy(x, y);
-            }}
-          />
+          <PrinciplesSlider />
         </section>
         <section className="main-slider__slide" id="projects">
           <Projects />
         </section>
-
-        <section className="main-slider__slide contact" id="contact-us">
-          <hgroup>
-            <h2>
-              <span className="text-gradient">Работа</span> с нами
-            </h2>
-            <a className="contact__email" href="mailto:we@ezmoney.studio">
-              we@ezmoney.studio
-            </a>
-          </hgroup>
-
-          <h3>
-            Написать <span className="text-gradient">нам</span>
-          </h3>
-
-          <ContactUsForm />
-          <p className="copyright">
-            Copyright © 2024 <b>EasyMoney Agency.</b> All Right Reserved
-          </p>
+        <section className="main-slider__slide" id="contact-us">
+          <div className="contact">
+            <hgroup>
+              <h2>
+                <span className="text-gradient">Работа</span> с нами
+              </h2>
+              <a className="contact__email" href="mailto:we@ezmoney.studio">
+                we@ezmoney.studio
+              </a>
+            </hgroup>
+            <h3>
+              Написать <span className="text-gradient">нам</span>
+            </h3>
+            <ContactUsForm />
+            <p className="copyright">
+              Copyright © 2024 <b>EasyMoney Agency.</b> All Right Reserved
+            </p>
+          </div>
         </section>
       </div>
-      <LaptopMotion currentSlide={currentSlide} />
+      {/*<LaptopMotion currentSlide={currentSlide} />*/}
     </>
   );
 };

@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
-import {Button} from '@mui/material';
+import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 
 const frameCount = 120;
 
@@ -11,6 +11,7 @@ const preloadImages = () => {
     const img = new Image();
     img.width = 0;
     img.height = 0;
+    img.hidden = true;
     img.src = getFrameSrc(i);
     document.body.appendChild(img);
   }
@@ -20,19 +21,41 @@ const animationDuration = 2000;
 
 const fps = animationDuration / frameCount;
 
-const getAnimatedStyles = (currentSlide: number) => {
-  switch (currentSlide) {
-    case 0:
-      return {scale: 1.4, x: -50, opacity: 1};
-    case 1:
-      return {
-        scale: 1.4,
-        x: -300,
-        y: 100,
-        opacity: 1,
-      };
-    default:
-      return {scale: 1.4, opacity: 0, x: -300, y: 100};
+const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
+  if (isMobileWidth) {
+    switch (currentSlide) {
+      case 0:
+        return {
+          opacity: 1,
+          left: 0,
+          y: '-20%',
+          scale: 1.1,
+        };
+      case 1:
+        return {
+          opacity: 1,
+          left: 'unset',
+          right: 0,
+          y: '30%',
+          scale: 1.1,
+        };
+      default:
+        return {scale: 1.4, opacity: 0, x: -300, y: 100};
+    }
+  } else {
+    switch (currentSlide) {
+      case 0:
+        return {scale: 1.4, x: -50, opacity: 1};
+      case 1:
+        return {
+          scale: 1.4,
+          x: -300,
+          y: 100,
+          opacity: 1,
+        };
+      default:
+        return {scale: 1.4, opacity: 0, x: -300, y: 100};
+    }
   }
 };
 
@@ -40,6 +63,7 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const prevSlideRef = useRef(currentSlide);
   const [_, set_] = useState(0);
+  const {isMobileWidth} = useContext(WindowSizeContext);
 
   const animationStartedAtRef = useRef({time: 0, frame: 0});
   const isForwardDirectionRef = useRef(true);
@@ -113,7 +137,6 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
 
-  console.log(getAnimatedStyles(currentSlide).opacity);
   return (
     <>
       <motion.div id="frame-counter" animate={{opacity: currentSlide > 1 ? 0 : 1}} initial={false}>
@@ -122,7 +145,7 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
       <motion.img
         height="100%"
         ref={imgRef}
-        animate={getAnimatedStyles(currentSlide)}
+        animate={getAnimatedStyles(currentSlide, isMobileWidth)}
         initial={{scale: 1, opacity: 0}}
         transition={{duration: 1.4, opacity: {duration: 0.2}}}
         className="iphone-motion"

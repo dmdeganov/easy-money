@@ -6,7 +6,7 @@
   &__hero {
     z-index: -10;
     position: absolute;
-    top: 50%;
+    top: calc(50% - #{$header-height/2});
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -76,7 +76,6 @@
     grid-gap: 20px;
     place-content: unset;
     padding-top: 150px;
-
   }
 }
 .principle-card {

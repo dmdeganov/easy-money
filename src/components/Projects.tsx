@@ -30,7 +30,7 @@ const Projects = () => {
   }, [isInView]);
 
   return (
-    <>
+    <div className="projects">
       <hgroup >
         <h2>
           Наши <span className="text-gradient">проекты</span>
@@ -41,7 +41,7 @@ const Projects = () => {
         </div>
       </hgroup>
       <motion.div
-        className="projects"
+        className="projects-grid"
         ref={ref}
         variants={container}
         animate={variant}
@@ -91,7 +91,7 @@ const Projects = () => {
           <span className="text-primary">И много других</span>
         </motion.div>
       </motion.div>
-    </>
+    </div>
   );
 };
 

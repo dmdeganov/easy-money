@@ -11,6 +11,7 @@ $semibold: var(--semibold);
 $bold: var(--bold);
 
 $content-mw: var(--content-mw);
+$header-height: var(--header-height);
 //$content-mw: calc(100vw - 160px);
 
 @mixin font($size) {

@@ -1,15 +1,19 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useRef} from 'react';
 
-export function useDebounce<T>(value: T, delay?: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function useDebounce(callback: Function, delay = 500) {
+  const timer = useRef<null | ReturnType<typeof setTimeout>>(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay || 300);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
+  return useCallback(
+    (...args: any) => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+      timer.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+      return timer.current;
+    },
+    [callback, delay],
+  );
 }

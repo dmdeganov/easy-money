@@ -7,7 +7,7 @@ header {
 }
 .header-inner {
   max-width: $content-mw;
-  height: 9.6rem;
+  height:$header-height;
   margin-inline: auto;
   display: flex;
   justify-content: space-between;

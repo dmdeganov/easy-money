@@ -1,5 +1,5 @@
 @use 'variables' as *;
-#projects {
+.projects {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -21,9 +21,7 @@
     }
   }
   @media only screen and (max-width: 640px) {
-    //justify-content: flex-start;
     hgroup {
-      //margin: 40px 0;
       div {
         column-gap: 12px;
       }
@@ -38,7 +36,7 @@
     }
   }
 }
-.projects {
+.projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
@@ -95,7 +93,6 @@
       @include font(18);
       margin-bottom: 12px;
       text-align: center;
-
     }
     p {
       @include font(14);
