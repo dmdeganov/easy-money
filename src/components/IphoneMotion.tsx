@@ -27,23 +27,21 @@ const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
       case 0:
         return {
           opacity: 1,
-          left: 0,
           y: '-10vh',
           scale: 1.1,
+          x: 0,
         };
       case 1:
         return {
           opacity: 1,
-          left: 'unset',
-          right: 0,
           y: '30%',
           scale: 1.1,
+          x: '-45%',
         };
       default:
         return {
           opacity: 0,
-          left: 'unset',
-          right: 0,
+          x: '-30%',
           y: '60%',
           scale: 1.1,
         };
@@ -142,7 +140,7 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
     }
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
-  console.log(isMobileWidth)
+  console.log(isMobileWidth);
 
   return (
     <>
