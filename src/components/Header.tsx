@@ -11,11 +11,11 @@ const Header = ({currentSlide, sliderRef}: {currentSlide: number; sliderRef: Rea
     sliderRef.current!.scrollTo(0, element.offsetTop);
   };
 
-  const [gap, setGap] = useState(100);
-
-  useEffect(() => {
-    sliderRef.current!.style.rowGap = `${gap}vh`;
-  }, [gap]);
+  // const [gap, setGap] = useState(100);
+  //
+  // useEffect(() => {
+  //   sliderRef.current!.style.rowGap = `${gap}vh`;
+  // }, [gap]);
 
   return (
     <header>
@@ -44,10 +44,10 @@ const Header = ({currentSlide, sliderRef}: {currentSlide: number; sliderRef: Rea
             <div className="link__underline" />
           </button>
         </nav>
-        <div>
-          <input type="range" min={0} max={200} value={gap} onChange={e => setGap(Number(e.target.value))} />
-          <span>{gap}</span>
-        </div>
+        {/*<div>*/}
+        {/*  <input type="range" min={0} max={200} value={gap} onChange={e => setGap(Number(e.target.value))} />*/}
+        {/*  <span>{gap}</span>*/}
+        {/*</div>*/}
         <OutlinedButton onClick={() => scrollToElementWithId('contact-us')}>Работа с нами</OutlinedButton>
       </div>
     </header>

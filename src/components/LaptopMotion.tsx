@@ -23,10 +23,9 @@ const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
   if (isMobileWidth) {
     return {
       opacity: currentSlide === 4 ? 1 : 0,
-      x: '15%',
     };
   } else {
-    return {opacity: currentSlide === 4 ? 1 : 0};
+    return {opacity: currentSlide === 4 ? 1 : 0, y: '5vh', x: '-15%'};
   }
 };
 
@@ -110,7 +109,6 @@ const LaptopMotion = ({currentSlide}: {currentSlide: number}) => {
 
   return (
     <motion.img
-      height="100%"
       ref={imgRef}
       animate={getAnimatedStyles(currentSlide, isMobileWidth)}
       initial={{opacity: 0}}

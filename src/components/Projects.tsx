@@ -2,10 +2,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import Image from 'next/image';
 import {motion, useInView} from 'framer-motion';
 
-const Projects = () => {
+const Projects = ({isInView}: {isInView: boolean}) => {
   const [variant, setVariant] = useState<'inView' | 'outsideView'>('inView');
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref);
 
   const container = {
     inView: {opacity: 1},
@@ -21,31 +20,22 @@ const Projects = () => {
     outsideView: {x: 0, y: 0, opacity: 1, transition: {ease: 'easeOut', duration: 0.3}},
   };
 
-  useEffect(() => {
-    if (isInView) {
-      setVariant('outsideView');
-    } else {
-      setVariant('inView');
-    }
-  }, [isInView]);
-
   return (
     <div className="projects">
-      <hgroup >
+      <hgroup>
         <h2>
           Наши <span className="text-gradient">проекты</span>
         </h2>
         <div>
-          <Image src="/app-store.svg" width={120} height={120} alt="app-store"/>
-          <Image src="/playmarket.svg" width={120} height={120} alt="playmarket"/>
+          <Image src="/app-store.svg" width={120} height={120} alt="app-store" />
+          <Image src="/playmarket.svg" width={120} height={120} alt="playmarket" />
         </div>
       </hgroup>
       <motion.div
         className="projects-grid"
         ref={ref}
         variants={container}
-        animate={variant}
-        onClick={() => setVariant(prev => (prev === 'inView' ? 'outsideView' : 'inView'))}
+        animate={isInView ? 'inView' : 'outsideView'}
       >
         <motion.article className="project-card" variants={project}>
           <Image src="/wi-fi-scanner.png" alt="Wi-Fi Scanner Logo" width={120} height={120} />

@@ -29,6 +29,7 @@
     line-height: 1;
     align-self: flex-end;
   }
+
   .copyright {
     grid-column: 2/3;
     color: $on-surface-50;
@@ -40,9 +41,10 @@
     }
   }
   @media only screen and (max-width: 640px) {
-    padding-top: 40px;
+    padding: 0;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, min-content) 1fr;
+    grid-template-rows: repeat(2, min-content) max-content;
+    place-content: center;
     row-gap: 20px;
 
     h2 {
@@ -58,12 +60,7 @@
       @include font(28);
     }
     .copyright {
-      position: absolute;
-      right: 0;
-      bottom: 12px;
-      width: 120px;
-      @include font(12);
-      justify-self: flex-end;
+      display: none;
     }
   }
 }
@@ -93,6 +90,30 @@
     grid-column: 1/2;
     button {
       height: 48px;
+    }
+  }
+}
+#contact-us {
+  position: relative;
+  .copyright-mobile {
+    display: none;
+  }
+  @media only screen and (max-width: 640px) {
+    .copyright-mobile {
+      display: block;
+      position: absolute;
+      right: 0;
+      bottom: 8px;
+      width: 125px;
+      z-index: 100;
+      line-height: 16px;
+      @include font(12);
+      color: $on-surface-50;
+      letter-spacing: 0.16px;
+      b {
+        color: $on-surface;
+        font-weight: $regular;
+      }
     }
   }
 }

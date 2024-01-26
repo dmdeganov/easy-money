@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {motion} from 'framer-motion';
 
-const About = ({isVisible}: {isVisible: boolean}) => {
+const About = ({isInView}: {isInView: boolean}) => {
   // const [variant, setVariant] = useState<'inView' | 'outsideView'>('outsideView');
   const ref = useRef<HTMLParagraphElement>(null);
   // const isInView = useInView(ref, {margin: '-50% 0px 0px 0px', root: sliderRef});
@@ -42,7 +42,7 @@ const About = ({isVisible}: {isVisible: boolean}) => {
         ref={ref}
         variants={container}
         initial="inView"
-        animate={isVisible ? 'inView' : 'outsideView'}
+        animate={isInView ? 'inView' : 'outsideView'}
       >
         <motion.span variants={item}>
           Маленькая <span className="text-gradient">студия</span>

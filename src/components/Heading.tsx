@@ -2,11 +2,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {motion, useInView} from 'framer-motion';
 
-const Heading = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
-  const [variant, setVariant] = useState<'inView' | 'outsideView'>('outsideView');
+const Heading = ({sliderRef, isInView}: {sliderRef: React.RefObject<HTMLDivElement>; isInView: boolean}) => {
   const hgroupRef = useRef<HTMLElement>(null);
   // const isInView = useInView(hgroupRef, {margin: '-50% 0px 0px 0px', root: sliderRef});
-  const isInView = useInView(hgroupRef, {root: sliderRef});
 
   const container = {
     outsideView: {opacity: 0, transition: {duration: 0.1, when: 'beforeChildren'}},
@@ -29,17 +27,14 @@ const Heading = ({sliderRef}: {sliderRef: React.RefObject<HTMLDivElement>}) => {
     },
   };
 
-  useEffect(() => {
-    if (isInView) {
-      setVariant('inView');
-    } else {
-      setVariant('outsideView');
-    }
-  }, [isInView]);
-
   return (
     <div className="heading">
-      <motion.hgroup initial="outsideView" animate={variant} ref={hgroupRef} variants={container}>
+      <motion.hgroup
+        initial="outsideView"
+        animate={isInView ? 'inView' : 'outsideView'}
+        ref={hgroupRef}
+        variants={container}
+      >
         <motion.div variants={item} className="text-gradient">
           Студия
         </motion.div>

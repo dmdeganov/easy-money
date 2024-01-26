@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  overflow: hidden;
   h2 {
     @include fontRem(7.2);
   }

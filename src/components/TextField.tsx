@@ -27,7 +27,7 @@ const TextField: React.FC<InputProps> = ({
       helperText={
         <AnimatePresence>
           {helperText ? (
-            <motion.div
+            <motion.p
               initial={{height: '0px'}}
               animate={{height: '16px', display: 'flex', alignItems: 'flex-end'}}
               style={{overflow: 'hidden'}}
@@ -35,7 +35,7 @@ const TextField: React.FC<InputProps> = ({
               exit={{height: '0px'}}
             >
               {helperText}
-            </motion.div>
+            </motion.p>
           ) : null}
         </AnimatePresence>
       }

@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Header from '@/components/Header';
 import PrinciplesSlider from '@/components/PrinciplesSlider';
 import {useScroll, useMotionValueEvent} from 'framer-motion';
@@ -10,6 +10,7 @@ import Projects from '@/components/Projects';
 import About from '@/components/About';
 import IphoneMotion from '@/components/IphoneMotion';
 import LaptopMotion from '@/components/LaptopMotion';
+import {useThrottle} from '@/hooks/useThrottle';
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,
@@ -26,7 +27,8 @@ const Page = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const prevScrollY = useRef<number>(0);
 
-  useMotionValueEvent(scrollYProgress, 'change', scrollY => {
+  const onScrollYChange = (scrollY: number) => {
+    console.log(scrollY);
     const direction = scrollY > prevScrollY.current ? 'down' : 'up';
     if (direction === 'down') {
       if (scrollY > scrollYMap[currentSlide] + threshold) {
@@ -39,7 +41,9 @@ const Page = () => {
       }
     }
     prevScrollY.current = scrollY;
-  });
+  };
+  const onScrollYChangeThrottled = useThrottle(onScrollYChange, 50);
+  useMotionValueEvent(scrollYProgress, 'change', onScrollYChangeThrottled);
 
   const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (e.deltaY === 100) {
@@ -55,20 +59,20 @@ const Page = () => {
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
-      {/*<IphoneMotion currentSlide={currentSlide} />*/}
+      <IphoneMotion currentSlide={currentSlide} />
 
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide" id="about">
-          <Heading sliderRef={sliderRef} />
+          <Heading sliderRef={sliderRef} isInView={currentSlide === 0} />
         </section>
         <section className="main-slider__slide">
-          <About isVisible={currentSlide === 1} />
+          <About isInView={currentSlide === 1} />
         </section>
         <section className="main-slider__slide" id="principles">
           <PrinciplesSlider />
         </section>
         <section className="main-slider__slide" id="projects">
-          <Projects />
+          <Projects isInView={currentSlide === 2} />
         </section>
         <section className="main-slider__slide" id="contact-us">
           <div className="contact">
@@ -88,9 +92,12 @@ const Page = () => {
               Copyright © 2024 <b>EasyMoney Agency.</b> All Right Reserved
             </p>
           </div>
+          <p className="copyright-mobile">
+            Copyright © 2024 <b>EasyMoney Agency.</b> All Right Reserved
+          </p>
         </section>
       </div>
-      {/*<LaptopMotion currentSlide={currentSlide} />*/}
+      <LaptopMotion currentSlide={currentSlide} />
     </>
   );
 };

@@ -30,5 +30,6 @@
 
   @media only screen and (max-width: 640px) {
     --content-mw: calc(100vw - 40px);
+    --header-height: 64px;
   }
 }

@@ -28,7 +28,7 @@ const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
         return {
           opacity: 1,
           left: 0,
-          y: '-20%',
+          y: '-10vh',
           scale: 1.1,
         };
       case 1:
@@ -40,21 +40,27 @@ const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
           scale: 1.1,
         };
       default:
-        return {scale: 1.4, opacity: 0, x: -300, y: 100};
+        return {
+          opacity: 0,
+          left: 'unset',
+          right: 0,
+          y: '60%',
+          scale: 1.1,
+        };
     }
   } else {
     switch (currentSlide) {
       case 0:
-        return {scale: 1.4, x: -50, opacity: 1};
+        return {scale: 1.3, x: -50, opacity: 1};
       case 1:
         return {
-          scale: 1.4,
+          scale: 1.3,
           x: -300,
-          y: 100,
+          y: 200,
           opacity: 1,
         };
       default:
-        return {scale: 1.4, opacity: 0, x: -300, y: 100};
+        return {scale: 1.4, opacity: 0, x: -300, y: 400};
     }
   }
 };
@@ -139,15 +145,14 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
 
   return (
     <>
-      <motion.div id="frame-counter" animate={{opacity: currentSlide > 1 ? 0 : 1}} initial={false}>
-        {prevCounter.current}
-      </motion.div>
+      {/*<motion.div id="frame-counter" animate={{opacity: currentSlide > 1 ? 0 : 1}} initial={false}>*/}
+      {/*  {prevCounter.current}*/}
+      {/*</motion.div>*/}
       <motion.img
-        height="100%"
         ref={imgRef}
         animate={getAnimatedStyles(currentSlide, isMobileWidth)}
-        initial={{scale: 1, opacity: 0}}
-        transition={{duration: 1.4, opacity: {duration: 0.2}}}
+        initial={{scale: 1, opacity: 0, left: isMobileWidth ? '0' : 'unset', y: isMobileWidth ? '-15vh' : 0}}
+        transition={{duration: 1, delay: (prevSlideRef.current === 1 && currentSlide === 0) ? 0.5 : 0, opacity: {duration: 0.5}}}
         className="iphone-motion"
         id="iphone-motion"
       />

@@ -18,7 +18,7 @@ const PrinciplesSlider = () => {
   const [scaleCard, setScaleCard] = useState(1);
 
   scrollXProgress.on('change', () => {
-    setScaleCard(0.95);
+    setScaleCard(0.97);
     if (timeoutId) {
       clearTimeout(timeoutId);
     }

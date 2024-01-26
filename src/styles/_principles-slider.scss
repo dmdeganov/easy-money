@@ -27,7 +27,7 @@
       top: 40px;
       left: 0;
       transform: unset;
-      width: 100vw;
+      width: 100%;
       display: flex;
       justify-content: center;
 
@@ -41,7 +41,6 @@
 .principles-slider {
   display: flex;
   overflow-x: scroll;
-  //scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -58,7 +57,7 @@
     &__slide {
       &:first-of-type,
       &:last-of-type {
-        width: 40px;
+        width: 32px;
       }
     }
   }
@@ -85,11 +84,11 @@
   padding: 4.8rem;
 
   h3 {
-    @include fontRem(6.4);
+    @include fontRem(6.2);
     margin-bottom: 3.2rem;
   }
   p {
-    @include fontRem(2.4);
+    @include fontRem(2.2);
     line-height: 120%;
   }
 
