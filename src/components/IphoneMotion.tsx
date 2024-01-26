@@ -51,7 +51,7 @@ const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
   } else {
     switch (currentSlide) {
       case 0:
-        return {scale: 1.3, x: -50, opacity: 1};
+        return {scale: 1.3, x: -50, opacity: 1, y: 0};
       case 1:
         return {
           scale: 1.3,
@@ -142,6 +142,7 @@ const IphoneMotion = ({currentSlide}: {currentSlide: number}) => {
     }
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
+  console.log(isMobileWidth)
 
   return (
     <>

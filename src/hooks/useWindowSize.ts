@@ -1,5 +1,5 @@
 'use client';
-import {useEffect, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {mobileMaxWidth} from '@/config';
 import {useDebounce} from '@/hooks/useDebounce';
 
@@ -17,7 +17,7 @@ export const useWindowSize = () => {
 
   const debouncedHandleResize = useDebounce(handleResize, 50);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleResize();
     window.addEventListener('resize', debouncedHandleResize);
     return (): void => window.removeEventListener('resize', debouncedHandleResize);
