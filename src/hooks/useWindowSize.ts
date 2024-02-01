@@ -3,10 +3,11 @@ import {useLayoutEffect, useState} from 'react';
 import {mobileMaxWidth} from '@/config';
 import {useDebounce} from '@/hooks/useDebounce';
 
+const [initialWidth, initialHeight] = typeof window !== 'undefined' ? [window.innerWidth, window.innerHeight] : [0, 0];
 export const useWindowSize = () => {
   const [windowDimensions, setWindowDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: initialWidth,
+    height: initialHeight,
   });
   const handleResize = () => {
     setWindowDimensions({
