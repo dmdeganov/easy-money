@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useLayoutEffect, useRef} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 
@@ -9,7 +9,9 @@ const fps = animationDuration / frameCount;
 
 const getFrameSrc = (index: number) => `laptop/${(index + 6).toString().padStart(4, '0')}.png`;
 
-const preloadImages = () => {
+const preloadImages = (setAreImagesLoaded: React.Dispatch<React.SetStateAction<boolean>>) => {
+  let count = 0;
+
   for (let i = 1; i < frameCount; i++) {
     const img = new Image();
     img.width = 0;
@@ -18,6 +20,12 @@ const preloadImages = () => {
     img.id = getFrameSrc(i);
     img.src = getFrameSrc(i);
     document.body.appendChild(img);
+    img.onload = () => {
+      count++;
+      if (count === frameCount - 1) {
+        setAreImagesLoaded(true);
+      }
+    };
   }
 };
 
@@ -32,6 +40,7 @@ const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
 };
 
 const LaptopCanvas = ({currentSlide}: {currentSlide: number}) => {
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
   const {isMobileWidth} = useContext(WindowSizeContext);
   const prevSlideRef = useRef(currentSlide);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -82,7 +91,7 @@ const LaptopCanvas = ({currentSlide}: {currentSlide: number}) => {
   };
 
   useEffect(() => {
-    preloadImages();
+    preloadImages(setAreImagesLoaded);
   }, []);
 
   useLayoutEffect(() => {
@@ -112,7 +121,7 @@ const LaptopCanvas = ({currentSlide}: {currentSlide: number}) => {
 
   return (
     <motion.canvas
-      animate={getAnimatedStyles(currentSlide, isMobileWidth)}
+      animate={areImagesLoaded ? getAnimatedStyles(currentSlide, isMobileWidth) : {}}
       initial={{opacity: 0}}
       transition={{duration: 1.6}}
       className="laptop-motion"

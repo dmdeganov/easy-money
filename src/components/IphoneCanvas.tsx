@@ -1,12 +1,14 @@
-import React, {useContext, useEffect, useLayoutEffect, useRef} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
+import {height, width} from '@mui/system';
 
 const frameCount = 120;
 
 const getFrameSrc = (index: number) => `iphone/${(index + 1).toString().padStart(4, '0')}-min.png`;
 
-const preloadImages = () => {
+const preloadImages = (setAreImagesLoaded: React.Dispatch<React.SetStateAction<boolean>>) => {
+  let count = 0;
   for (let i = 1; i < frameCount; i++) {
     const img = new Image();
     img.width = 0;
@@ -15,6 +17,12 @@ const preloadImages = () => {
     img.id = getFrameSrc(i);
     img.src = getFrameSrc(i);
     document.body.appendChild(img);
+    img.onload = () => {
+      count++;
+      if (count === frameCount - 1) {
+        setAreImagesLoaded(true);
+      }
+    };
   }
 };
 
@@ -69,7 +77,7 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
 
   const prevSlideRef = useRef(currentSlide);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
   const animationStartedAtRef = useRef({time: 0, frame: 0});
   const isForwardDirectionRef = useRef(true);
   const prevFrameRef = useRef(1);
@@ -116,7 +124,7 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
   };
 
   useEffect(() => {
-    preloadImages();
+    preloadImages(setAreImagesLoaded);
   }, []);
 
   useLayoutEffect(() => {
@@ -127,11 +135,16 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
     canvas.width = width;
     const context = canvasRef.current!.getContext('2d');
 
-    setTimeout(() => {
-      const initialImage = document.getElementById(getFrameSrc(1)) as HTMLImageElement;
-      context!.drawImage(initialImage, 0, 0, width, height);
-    }, 1000);
+    setTimeout(() => {}, 1000);
   }, []);
+
+  useEffect(() => {
+    if (areImagesLoaded) {
+      const context = canvasRef.current!.getContext('2d');
+      const initialImage = document.getElementById(getFrameSrc(1)) as HTMLImageElement;
+      context!.drawImage(initialImage, 0, 0, canvasSizeRef.current.width, canvasSizeRef.current.height);
+    }
+  }, [areImagesLoaded]);
 
   useEffect(() => {
     if (currentSlide === prevSlideRef.current) return;
@@ -146,7 +159,7 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
 
   return (
     <motion.canvas
-      animate={getAnimatedStyles(currentSlide, isMobileWidth)}
+      animate={areImagesLoaded ? getAnimatedStyles(currentSlide, isMobileWidth) : {}}
       initial={{opacity: 0}}
       transition={{duration: 1.4, opacity: {duration: 0.2}}}
       className="iphone-motion"
