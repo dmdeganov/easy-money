@@ -8,9 +8,10 @@ import SliderIndicator from '@/components/SliderIndicator';
 import Heading from '@/components/Heading';
 import Projects from '@/components/Projects';
 import About from '@/components/About';
-import IphoneMotion from '@/components/IphoneMotion';
+// import IphoneMotion from '@/components/IphoneMotion';
 import LaptopMotion from '@/components/LaptopMotion';
 import {useThrottle} from '@/hooks/useThrottle';
+import IphoneCanvas from '@/components/IphoneCanvas';
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,
@@ -59,7 +60,7 @@ const Page = () => {
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
-      <IphoneMotion currentSlide={currentSlide} />
+      <IphoneCanvas currentSlide={currentSlide} />
 
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide" id="about">
@@ -78,7 +79,8 @@ const Page = () => {
           <div className="contact">
             <hgroup>
               <h2>
-                <span className="text-gradient">Работа</span> с нами
+                <span className="text-gradient">Работа</span>
+                <span> с нами</span>
               </h2>
               <a className="contact__email" href="mailto:we@ezmoney.studio">
                 we@ezmoney.studio
