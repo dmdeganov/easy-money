@@ -18,7 +18,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       </Head>
       <WindowSizeContextProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          {children}
+          <div id="portal" />
+        </body>
       </WindowSizeContextProvider>
     </html>
   );

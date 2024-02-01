@@ -1,8 +1,11 @@
 'use client';
 import React from 'react';
-import {useForm, Controller} from 'react-hook-form';
+import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import TextField from '@/components/TextField';
 import ContainedButton from '@/components/ContainedButton';
+import {useSendEmail} from '@/hooks/useSendEmail';
+import useModal from '@/hooks/useModal';
+import EmailSentModal from '@/components/EmailSentModal';
 
 export interface FormInputs {
   name: string;
@@ -25,19 +28,21 @@ const ContactUsForm = () => {
     },
   });
 
-  // const {isOpen, open, close, modalData, setModalData} = useModal<{success: boolean}>();
-  // const onSuccess = () => {
-  //   setModalData({success: true});
-  //   reset();
-  //   open();
-  // };
-  // const onError = () => {
-  //   setModalData({success: false});
-  //   open();
-  // };
-  // const {sendEmail, loading} = useSendEmail({onError, onSuccess});
+  const {isOpen, open, close, modalData, setModalData} = useModal<{success: boolean}>();
 
-  // const onSubmit: SubmitHandler<FormInputs> = async data => sendEmail(data);
+  const onSuccess = () => {
+    setModalData({success: true});
+    reset();
+    open();
+  };
+
+  const onError = () => {
+    setModalData({success: false});
+    open();
+  };
+  const {sendEmail, loading} = useSendEmail({onError, onSuccess});
+
+  const onSubmit: SubmitHandler<FormInputs> = async data => sendEmail(data);
 
   const getInputValidationProps = (inputName: keyof FormInputs) => ({
     error: !!errors[inputName]?.message,
@@ -47,7 +52,7 @@ const ContactUsForm = () => {
 
   return (
     <>
-      <form className="contact-form">
+      <form className="contact-form" onSubmit={e => e.preventDefault()}>
         <Controller
           name="name"
           control={control}
@@ -105,14 +110,15 @@ const ContactUsForm = () => {
         />
         <ContainedButton
           type="submit"
-          // onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(onSubmit)}
           className="contact-form__submit-button"
           disabled={!isValid}
-          // loading={loading}
+          loading={loading}
         >
           Отправить
         </ContainedButton>
       </form>
+      <EmailSentModal isOpen={isOpen} close={close} success={modalData?.success as boolean} />
     </>
   );
 };

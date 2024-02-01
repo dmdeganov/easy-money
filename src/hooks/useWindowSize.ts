@@ -5,8 +5,8 @@ import {useDebounce} from '@/hooks/useDebounce';
 
 export const useWindowSize = () => {
   const [windowDimensions, setWindowDimensions] = useState({
-    width: 0,
-    height: 0,
+    width: window.innerWidth,
+    height: window.innerHeight,
   });
   const handleResize = () => {
     setWindowDimensions({
@@ -18,7 +18,6 @@ export const useWindowSize = () => {
   const debouncedHandleResize = useDebounce(handleResize, 50);
 
   useLayoutEffect(() => {
-    handleResize();
     window.addEventListener('resize', debouncedHandleResize);
     return (): void => window.removeEventListener('resize', debouncedHandleResize);
   }, []);
