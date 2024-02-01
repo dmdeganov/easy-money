@@ -8,10 +8,9 @@ import SliderIndicator from '@/components/SliderIndicator';
 import Heading from '@/components/Heading';
 import Projects from '@/components/Projects';
 import About from '@/components/About';
-// import IphoneMotion from '@/components/IphoneMotion';
-import LaptopMotion from '@/components/LaptopMotion';
 import {useThrottle} from '@/hooks/useThrottle';
 import IphoneCanvas from '@/components/IphoneCanvas';
+import LaptopCanvas from "@/components/LaptopCanvas";
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,
@@ -29,7 +28,6 @@ const Page = () => {
   const prevScrollY = useRef<number>(0);
 
   const onScrollYChange = (scrollY: number) => {
-    console.log(scrollY);
     const direction = scrollY > prevScrollY.current ? 'down' : 'up';
     if (direction === 'down') {
       if (scrollY > scrollYMap[currentSlide] + threshold) {
@@ -55,13 +53,11 @@ const Page = () => {
     }
   };
 
-  console.log({currentSlide});
   return (
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
       <IphoneCanvas currentSlide={currentSlide} />
-
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide" id="about">
           <Heading sliderRef={sliderRef} isInView={currentSlide === 0} />
@@ -99,7 +95,7 @@ const Page = () => {
           </p>
         </section>
       </div>
-      <LaptopMotion currentSlide={currentSlide} />
+      <LaptopCanvas currentSlide={currentSlide} />
     </>
   );
 };

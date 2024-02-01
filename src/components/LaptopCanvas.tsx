@@ -2,9 +2,12 @@ import React, {useContext, useEffect, useLayoutEffect, useRef} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 
-const frameCount = 120;
+const frameCount = 97;
+const animationDuration = 1600;
 
-const getFrameSrc = (index: number) => `iphone/${(index + 1).toString().padStart(4, '0')}-min.png`;
+const fps = animationDuration / frameCount;
+
+const getFrameSrc = (index: number) => `laptop/${(index + 6).toString().padStart(4, '0')}.png`;
 
 const preloadImages = () => {
   for (let i = 1; i < frameCount; i++) {
@@ -18,55 +21,18 @@ const preloadImages = () => {
   }
 };
 
-const animationDuration = 2000;
-
-const fps = animationDuration / frameCount;
-
 const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
   if (isMobileWidth) {
-    switch (currentSlide) {
-      case 0:
-        return {
-          opacity: 1,
-          y: '-10vh',
-          scale: 1.1,
-          x: 0,
-        };
-      case 1:
-        return {
-          opacity: 1,
-          y: '30%',
-          scale: 1.1,
-          x: '-45%',
-        };
-      default:
-        return {
-          opacity: 0,
-          x: '-30%',
-          y: '60%',
-          scale: 1.1,
-        };
-    }
+    return {
+      opacity: currentSlide === 4 ? 1 : 0,
+    };
   } else {
-    switch (currentSlide) {
-      case 0:
-        return {scale: 1.3, x: -50, opacity: 1, y: 0};
-      case 1:
-        return {
-          scale: 1.3,
-          x: -300,
-          y: 200,
-          opacity: 1,
-        };
-      default:
-        return {scale: 1.3, opacity: 0, x: -300, y: 400};
-    }
+    return {opacity: currentSlide === 4 ? 1 : 0, y: '5vh', x: '-15%'};
   }
 };
 
-const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
+const LaptopCanvas = ({currentSlide}: {currentSlide: number}) => {
   const {isMobileWidth} = useContext(WindowSizeContext);
-
   const prevSlideRef = useRef(currentSlide);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -135,10 +101,10 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
 
   useEffect(() => {
     if (currentSlide === prevSlideRef.current) return;
-    if (prevSlideRef.current === 0 && currentSlide === 1) {
+    if (prevSlideRef.current === 3 && currentSlide === 4) {
       playForward();
     }
-    if (prevSlideRef.current === 1 && currentSlide === 0) {
+    if (prevSlideRef.current === 4 && currentSlide === 3) {
       playReverse();
     }
     prevSlideRef.current = currentSlide;
@@ -148,12 +114,11 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
     <motion.canvas
       animate={getAnimatedStyles(currentSlide, isMobileWidth)}
       initial={{opacity: 0}}
-      transition={{duration: 1.4, opacity: {duration: 0.2}}}
-      className="iphone-motion"
-      id="iphone-motion"
+      transition={{duration: 1.6}}
+      className="laptop-motion"
       ref={canvasRef}
     />
   );
 };
 
-export default IphoneCanvas;
+export default LaptopCanvas;
