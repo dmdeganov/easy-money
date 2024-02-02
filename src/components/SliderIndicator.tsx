@@ -1,3 +1,4 @@
+'use client';
 import React, {useContext} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
@@ -5,10 +6,12 @@ import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 const arr = [0, 1, 2, 3, 4];
 
 const SliderIndicator = ({currentSlide}: {currentSlide: number}) => {
-  const {isMobileWidth} = useContext(WindowSizeContext);
+  const {width} = useContext(WindowSizeContext);
+  console.log(width)
+  if (!width) return null;
 
   return (
-    <div className={`slider-indicator${isMobileWidth ? ' slider-indicator--mobile' : ''}`}>
+    <div className={`slider-indicator${width <= 640 ? ' slider-indicator--mobile' : ''}`}>
       {arr.map(dot => {
         const isActive = dot === currentSlide;
         const style = {
@@ -30,7 +33,7 @@ const SliderIndicator = ({currentSlide}: {currentSlide: number}) => {
       })}
       <motion.div
         className="slider-indicator__outside-circle"
-        animate={{[isMobileWidth ? 'x' : 'y']: `${currentSlide * 24}px`}}
+        animate={{[width <= 640 ? 'x' : 'y']: `${currentSlide * 24}px`}}
         transition={{ease: 'easeInOut'}}
       />
     </div>

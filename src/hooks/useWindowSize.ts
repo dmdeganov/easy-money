@@ -1,10 +1,12 @@
 'use client';
-import {useLayoutEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {mobileMaxWidth} from '@/config';
 import {useDebounce} from '@/hooks/useDebounce';
 
-const [initialWidth, initialHeight] = typeof window !== 'undefined' ? [window.innerWidth, window.innerHeight] : [0, 0];
 export const useWindowSize = () => {
+  const [initialWidth, initialHeight] =
+    typeof window !== 'undefined' ? [window.innerWidth, window.innerHeight] : [0, 0];
+
   const [windowDimensions, setWindowDimensions] = useState({
     width: initialWidth,
     height: initialHeight,
@@ -18,10 +20,12 @@ export const useWindowSize = () => {
 
   const debouncedHandleResize = useDebounce(handleResize, 50);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', debouncedHandleResize);
     return (): void => window.removeEventListener('resize', debouncedHandleResize);
   }, []);
+
+  console.log(windowDimensions);
 
   return {
     width: windowDimensions.width,
