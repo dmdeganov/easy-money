@@ -2,7 +2,7 @@
 import React, {useRef, useState} from 'react';
 import Header from '@/components/Header';
 import PrinciplesSlider from '@/components/PrinciplesSlider';
-import {useScroll, useMotionValueEvent} from 'framer-motion';
+import {useScroll, useMotionValueEvent, useVelocity} from 'framer-motion';
 import ContactUsForm from '@/components/ContactUsForm';
 import SliderIndicator from '@/components/SliderIndicator';
 import Heading from '@/components/Heading';
@@ -10,7 +10,7 @@ import Projects from '@/components/Projects';
 import About from '@/components/About';
 import {useThrottle} from '@/hooks/useThrottle';
 import IphoneCanvas from '@/components/IphoneCanvas';
-import LaptopCanvas from "@/components/LaptopCanvas";
+import LaptopCanvas from '@/components/LaptopCanvas';
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,

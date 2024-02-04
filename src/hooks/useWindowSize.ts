@@ -25,8 +25,6 @@ export const useWindowSize = () => {
     return (): void => window.removeEventListener('resize', debouncedHandleResize);
   }, []);
 
-  console.log(windowDimensions);
-
   return {
     width: windowDimensions.width,
     height: windowDimensions.height,

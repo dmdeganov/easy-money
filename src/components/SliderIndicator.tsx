@@ -1,5 +1,5 @@
 'use client';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 
@@ -7,13 +7,14 @@ const arr = [0, 1, 2, 3, 4];
 
 const SliderIndicator = ({currentSlide}: {currentSlide: number}) => {
   const {width} = useContext(WindowSizeContext);
-  const [isMounted, setIsMounted] = useState(false);
+  const [hydrationDone, setHydrationDone] = useState(false);
+
 
   useEffect(() => {
-    setIsMounted(true);
+    setHydrationDone(true);
   }, []);
 
-  if (!isMounted || !width) return null;
+  if (!hydrationDone || !width) return null;
 
   return (
     <div className={`slider-indicator${width <= 640 ? ' slider-indicator--mobile' : ''}`}>

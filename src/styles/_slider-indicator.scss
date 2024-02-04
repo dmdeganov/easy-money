@@ -2,7 +2,6 @@
 
 .slider-indicator {
   width: 20px;
-  //border: 1px solid $primary;
   position: fixed;
   right: 40px;
   top: 50%;
@@ -35,19 +34,10 @@
     left: 0;
     transform-origin: center;
   }
-  //@media only screen and (max-width: 640px) {
-  //  transform: rotate(-90deg);
-  //  left: 65px;
-  //  top: unset;
-  //  bottom: -30px;
-  //  background: $surface;
-  //  z-index: 10000;
-  //}
 }
 
 .slider-indicator--mobile {
   z-index: 10;
-  //position: relative;
   flex-direction: row;
   column-gap: 4px;
   width: unset;
@@ -72,5 +62,8 @@
     &__dot-container {
       z-index: 100;
     }
+  }
+  @media only screen and (max-height: 700px) {
+    display: none;
   }
 }
