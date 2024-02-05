@@ -30,8 +30,38 @@ const animationDuration = 2000;
 
 const fps = animationDuration / frameCount;
 
-const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
-  if (isMobileWidth) {
+const getAnimatedStyles = (currentSlide: number, width: number) => {
+  if (width >= 1280) {
+    switch (currentSlide) {
+      case 0:
+        return {scale: 1.3, x: -50, opacity: 1, y: 0};
+      case 1:
+        return {
+          scale: 1.3,
+          x: '-10vw',
+          y: 200,
+          opacity: 1,
+        };
+      default:
+        return {scale: 1.3, opacity: 0, x: -300, y: 400};
+    }
+  }
+  if (width < 1280 && width > 640) {
+    switch (currentSlide) {
+      case 0:
+        return {scale: 1.2, x: -50, opacity: 1, y: 0};
+      case 1:
+        return {
+          scale: 1.2,
+          x: '-10vw',
+          y: 200,
+          opacity: 1,
+        };
+      default:
+        return {scale: 1.3, opacity: 0, x: '-10vw', y: 400};
+    }
+  }
+  if (width <= 640) {
     switch (currentSlide) {
       case 0:
         return {
@@ -55,25 +85,11 @@ const getAnimatedStyles = (currentSlide: number, isMobileWidth: boolean) => {
           scale: 1.1,
         };
     }
-  } else {
-    switch (currentSlide) {
-      case 0:
-        return {scale: 1.3, x: -50, opacity: 1, y: 0};
-      case 1:
-        return {
-          scale: 1.3,
-          x: -300,
-          y: 200,
-          opacity: 1,
-        };
-      default:
-        return {scale: 1.3, opacity: 0, x: -300, y: 400};
-    }
   }
 };
 
 const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
-  const {isMobileWidth} = useContext(WindowSizeContext);
+  const {width, isMobileWidth} = useContext(WindowSizeContext);
 
   const prevSlideRef = useRef(currentSlide);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -159,7 +175,7 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
 
   return (
     <motion.canvas
-      animate={areImagesLoaded ? getAnimatedStyles(currentSlide, isMobileWidth) : {}}
+      animate={areImagesLoaded ? getAnimatedStyles(currentSlide, width) : {}}
       initial={{opacity: 0}}
       transition={{duration: 1.4, opacity: {duration: 0.2}}}
       className="iphone-motion"

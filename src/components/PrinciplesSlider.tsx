@@ -1,5 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {motion, useScroll, useTransform, useSpring} from 'framer-motion';
+import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 
 let timeoutId = 0;
 
@@ -8,6 +9,8 @@ const PrinciplesSlider = () => {
   const {scrollXProgress} = useScroll({
     container: ref,
   });
+
+  const {isMobileWidth} = useContext(WindowSizeContext);
 
   const scrollXSpringed = useSpring(scrollXProgress, {
     stiffness: 80,
@@ -28,8 +31,13 @@ const PrinciplesSlider = () => {
     }, 150);
   });
 
-  const backgroundSize = useTransform(scrollXSpringed, [0, 0.5, 1], ['0%', '100%', '0%']);
-  const backgroundPosition = useTransform(scrollXProgress, [0, 0.499, 0.5, 1], ['right', 'right', 'left', 'left']);
+  console.log(isMobileWidth)
+  const backgroundSize = useTransform(
+    scrollXSpringed,
+    [0, 0.5, 1],
+    isMobileWidth ? ['0%', '50%', '100%'] : ['0%', '100%', '0%'],
+  );
+  const backgroundPosition = useTransform(scrollXProgress, [0, 0.499, 0.5, 1], isMobileWidth ? ['right', 'right', 'right', 'right'] :['right', 'right', 'left', 'left']);
 
   function eventWheel(e: WheelEvent) {
     if (!ref.current) return;
@@ -67,14 +75,22 @@ const PrinciplesSlider = () => {
       <div className="principles-slider" ref={ref}>
         <div className="principles-slider__slide" />
         <div className="principles-slider__slide principles-grid">
-          <motion.div className="principle-card" animate={{scale: scaleCard}} transition={{duration: 0.1}}>
+          <motion.div
+            className="principle-card"
+            animate={{scale: scaleCard}}
+            transition={{duration: 0.2, ease: 'easeOut'}}
+          >
             <h3>Просто</h3>
             <p>
               <span className="text-primary">Наш фокус</span> – создание мобильных приложений, которые не только легки в
               использовании, но и несут огромную пользу для миллионов пользователей по всему миру.
             </p>
           </motion.div>
-          <motion.div className="principle-card" animate={{scale: scaleCard}} transition={{duration: 0.1}}>
+          <motion.div
+            className="principle-card"
+            animate={{scale: scaleCard}}
+            transition={{duration: 0.2, ease: 'easeOut'}}
+          >
             <h3>Современно</h3>
             <p>
               <span className="text-primary">Будущее </span> – за гибкими рабочими моделями. Наша удаленная рабочая
@@ -82,7 +98,11 @@ const PrinciplesSlider = () => {
               вносить свой вклад из любой точки мира.
             </p>
           </motion.div>
-          <motion.div className="principle-card" animate={{scale: scaleCard}} transition={{duration: 0.1}}>
+          <motion.div
+            className="principle-card"
+            animate={{scale: scaleCard}}
+            transition={{duration: 0.2, ease: 'easeOut'}}
+          >
             <h3>Успешно</h3>
             <p>
               <span className="text-primary">Финансовый Успех</span> – часть нашей ДНК! Мы понимаем, что успех в

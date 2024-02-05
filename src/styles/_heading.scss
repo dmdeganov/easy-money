@@ -12,6 +12,11 @@
       overflow: hidden;
     }
   }
+  @media only screen and (max-width: 1280px) {
+  hgroup{
+    @include font(80);
+  }
+  }
   @media only screen and (max-width: 640px) {
     padding-bottom: 48px;
     hgroup {

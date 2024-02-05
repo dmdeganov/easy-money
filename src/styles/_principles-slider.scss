@@ -22,6 +22,14 @@
     -webkit-text-fill-color: transparent;
     @include font(192);
   }
+  @media only screen and (max-width: 1280px) {
+    &__hero {
+
+      h2 {
+        @include font(96);
+      }
+    }
+  }
   @media only screen and (max-width: 640px) {
     &__hero {
       top: 40px;
@@ -69,6 +77,9 @@
   grid-template-columns: repeat(3, 620px);
   grid-gap: 48px;
   overflow: hidden;
+  @media only screen and (max-width: 1280px) {
+    grid-template-columns: repeat(3, 500px);
+  }
   @media only screen and (max-width: 640px) {
     grid-template-columns: repeat(3, 85vw);
     grid-template-rows: min-content;
@@ -104,6 +115,10 @@
   &:nth-child(3) {
     align-self: flex-end;
     grid-column: 3/4;
+  }
+  @media only screen and (max-width: 1280px) {
+    padding: 32px;
+
   }
   @media only screen and (max-width: 640px) {
     padding: 16px;

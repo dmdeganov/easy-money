@@ -26,11 +26,33 @@
   bottom: 0;
   z-index: -10;
   background-color: transparent;
-  @media only screen and (max-width: 640px) {
+  @media only screen and (max-width: 1140px) and (min-width: 960px) {
+    scale: 0.8;
+    transform-origin: left bottom;
+  }
+  @media only screen and (max-width: 960px) {
+    height: 450px;
+    bottom: unset;
+    left: unset;
+    top: 40px;
+    right: -5px;
+  }
+  @media only screen and (max-width: 900px) {
+    height: 350px;
+    bottom: unset;
+    left: unset;
+    top: 40px;
+    right: -5px;
+  }
+  @media only screen and (max-width: 775px) {
+
+  }
+  @media only screen and (max-width: 775px) {
     height: 250px;
     bottom: unset;
     left: unset;
     top: 40px;
     right: -5px;
   }
+
 }

@@ -28,6 +28,10 @@
   --content-mw: min(1440px, calc(100vw - 160px));
   --header-height: 9.6rem;
 
+  @media only screen and (max-width: 1280px) {
+    --content-mw: min(1440px, calc(100vw - 64px));
+  }
+
   @media only screen and (max-width: 640px) {
     --content-mw: calc(100vw - 40px);
     --header-height: 64px;
