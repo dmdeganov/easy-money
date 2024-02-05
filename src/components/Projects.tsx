@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Image from 'next/image';
 import {motion, useInView} from 'framer-motion';
+import './projects.css'
 
 const Projects = ({isInView}: {isInView: boolean}) => {
   const [variant, setVariant] = useState<'inView' | 'outsideView'>('inView');
