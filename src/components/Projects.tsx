@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import Image from 'next/image';
-import {motion, useInView} from 'framer-motion';
+import {motion} from 'framer-motion';
 import './projects.css'
 
 const Projects = ({isInView}: {isInView: boolean}) => {
-  const [variant, setVariant] = useState<'inView' | 'outsideView'>('inView');
   const ref = useRef<HTMLDivElement>(null);
 
   const container = {
@@ -28,7 +27,7 @@ const Projects = ({isInView}: {isInView: boolean}) => {
           Наши <span className="text-gradient">проекты</span>
         </h2>
         <div>
-          <Image src="/app-store.svg" width={120} height={120} alt="app-store" />
+          <Image src="/app-store.svg" width={120} height={120} alt="app-store"/>
           <Image src="/playmarket.svg" width={120} height={120} alt="playmarket" />
         </div>
       </hgroup>

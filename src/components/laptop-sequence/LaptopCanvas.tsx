@@ -1,15 +1,16 @@
 import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
+import {animatedStyles} from '@/components/laptop-sequence/animatedStyles';
 
 const frameCount = 97;
 const animationDuration = 1600;
 
 const fps = animationDuration / frameCount;
 
-const getFrameSrc = (index: number) => `laptop/${(index + 6).toString().padStart(4, '0')}.png`;
+export const getFrameSrc = (index: number) => `laptop/${(index + 6).toString().padStart(4, '0')}.png`;
 
-const preloadImages = (setAreImagesLoaded: React.Dispatch<React.SetStateAction<boolean>>) => {
+const preloadImages = (setAreImagesLoaded: () => void) => {
   let count = 0;
 
   for (let i = 1; i < frameCount; i++) {
@@ -23,42 +24,21 @@ const preloadImages = (setAreImagesLoaded: React.Dispatch<React.SetStateAction<b
     img.onload = () => {
       count++;
       if (count === frameCount - 1) {
-        setAreImagesLoaded(true);
+        setAreImagesLoaded();
       }
     };
   }
 };
 
-const getAnimatedStyles = (currentSlide: number, width: number) => {
-  if (width >= 1140) {
-    return {opacity: currentSlide === 4 ? 1 : 0, y: '5vh', x: '-15%'};
-  }
-  if (width > 775 && width < 1140) {
-    return {
-      opacity: currentSlide === 4 ? 1 : 0,
-      y: 0,
-      x: '-15%'
-    };
-  }
-  if (width > 640 && width < 775){
-    return {
-      opacity: currentSlide === 4 ? 1 : 0,
-      y: 40,
-      x: 0,
-    };
-  }
-
-  if (width <= 640) {
-    return {
-      x: 0,
-      y: 0,
-      opacity: currentSlide === 4 ? 1 : 0,
-    };
-  }
-};
-
-const LaptopCanvas = ({currentSlide}: {currentSlide: number}) => {
-  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
+const LaptopCanvas = ({
+  currentSlide,
+  onAllImagesLoad,
+  visible,
+}: {
+  currentSlide: number;
+  onAllImagesLoad: () => void;
+  visible: boolean;
+}) => {
   const {isMobileWidth, width} = useContext(WindowSizeContext);
   const prevSlideRef = useRef(currentSlide);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -109,7 +89,7 @@ const LaptopCanvas = ({currentSlide}: {currentSlide: number}) => {
   };
 
   useEffect(() => {
-    preloadImages(setAreImagesLoaded);
+    preloadImages(onAllImagesLoad);
   }, []);
 
   useLayoutEffect(() => {
@@ -137,10 +117,14 @@ const LaptopCanvas = ({currentSlide}: {currentSlide: number}) => {
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
 
+  const style = visible && currentSlide >= 3 ? {opacity: 1} : {opacity: 0};
+
+
   return (
     <motion.canvas
-      animate={areImagesLoaded ? getAnimatedStyles(currentSlide, width) : {}}
-      initial={{opacity: 0}}
+      animate={{...animatedStyles(currentSlide, width), ...style}}
+      initial={false}
+      hidden={!visible}
       transition={{duration: 1.6}}
       className="laptop-motion"
       ref={canvasRef}

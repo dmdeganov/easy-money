@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
-import {height, width} from '@mui/system';
+import {getAnimatedStyles} from '@/components/iphone-sequence/animatedStyles';
 
 const frameCount = 120;
 
-const getFrameSrc = (index: number) => `iphone/${(index + 1).toString().padStart(4, '0')}-min.png`;
+export const getFrameSrc = (index: number) => `iphone/${(index + 1).toString().padStart(4, '0')}-min.png`;
 
-const preloadImages = (setAreImagesLoaded: React.Dispatch<React.SetStateAction<boolean>>) => {
+const preloadImages = (onAllImagesLoad: () => void) => {
   let count = 0;
   for (let i = 1; i < frameCount; i++) {
     const img = new Image();
@@ -20,7 +20,7 @@ const preloadImages = (setAreImagesLoaded: React.Dispatch<React.SetStateAction<b
     img.onload = () => {
       count++;
       if (count === frameCount - 1) {
-        setAreImagesLoaded(true);
+        onAllImagesLoad();
       }
     };
   }
@@ -30,70 +30,19 @@ const animationDuration = 2000;
 
 const fps = animationDuration / frameCount;
 
-const getAnimatedStyles = (currentSlide: number, width: number) => {
-  if (width >= 1280) {
-    switch (currentSlide) {
-      case 0:
-        return {scale: 1.3, x: -50, opacity: 1, y: 0};
-      case 1:
-        return {
-          scale: 1.3,
-          x: '-10vw',
-          y: 200,
-          opacity: 1,
-        };
-      default:
-        return {scale: 1.3, opacity: 0, x: -300, y: 400};
-    }
-  }
-  if (width < 1280 && width > 640) {
-    switch (currentSlide) {
-      case 0:
-        return {scale: 1.2, x: -50, opacity: 1, y: 0};
-      case 1:
-        return {
-          scale: 1.2,
-          x: '-10vw',
-          y: 200,
-          opacity: 1,
-        };
-      default:
-        return {scale: 1.3, opacity: 0, x: '-10vw', y: 400};
-    }
-  }
-  if (width <= 640) {
-    switch (currentSlide) {
-      case 0:
-        return {
-          opacity: 1,
-          y: '-10vh',
-          scale: 1.1,
-          x: 0,
-        };
-      case 1:
-        return {
-          opacity: 1,
-          y: '30%',
-          scale: 1.1,
-          x: '-45%',
-        };
-      default:
-        return {
-          opacity: 0,
-          x: '-30%',
-          y: '60%',
-          scale: 1.1,
-        };
-    }
-  }
-};
-
-const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
+const IphoneCanvas = ({
+  currentSlide,
+  onAllImagesLoad,
+  visible,
+}: {
+  currentSlide: number;
+  onAllImagesLoad: () => void;
+  visible: boolean;
+}) => {
   const {width, isMobileWidth} = useContext(WindowSizeContext);
 
   const prevSlideRef = useRef(currentSlide);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
   const animationStartedAtRef = useRef({time: 0, frame: 0});
   const isForwardDirectionRef = useRef(true);
   const prevFrameRef = useRef(1);
@@ -140,7 +89,7 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
   };
 
   useEffect(() => {
-    preloadImages(setAreImagesLoaded);
+    preloadImages(onAllImagesLoad);
   }, []);
 
   useLayoutEffect(() => {
@@ -149,18 +98,15 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
     canvasSizeRef.current = {height, width};
     canvas.height = height;
     canvas.width = width;
-    const context = canvasRef.current!.getContext('2d');
-
-    setTimeout(() => {}, 1000);
   }, []);
 
   useEffect(() => {
-    if (areImagesLoaded) {
+    if (visible) {
       const context = canvasRef.current!.getContext('2d');
       const initialImage = document.getElementById(getFrameSrc(1)) as HTMLImageElement;
       context!.drawImage(initialImage, 0, 0, canvasSizeRef.current.width, canvasSizeRef.current.height);
     }
-  }, [areImagesLoaded]);
+  }, [visible]);
 
   useEffect(() => {
     if (currentSlide === prevSlideRef.current) return;
@@ -173,10 +119,14 @@ const IphoneCanvas = ({currentSlide}: {currentSlide: number}) => {
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
 
+  const style = visible && currentSlide <= 1 ? {opacity: 1} : {opacity: 0};
+
   return (
     <motion.canvas
-      animate={areImagesLoaded ? getAnimatedStyles(currentSlide, width) : {}}
-      initial={{opacity: 0}}
+      suppressHydrationWarning={true}
+      animate={{...getAnimatedStyles(currentSlide, width), ...style}}
+      initial={false}
+      hidden={!visible}
       transition={{duration: 1.4, opacity: {duration: 0.2}}}
       className="iphone-motion"
       id="iphone-motion"

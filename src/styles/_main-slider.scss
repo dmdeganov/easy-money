@@ -13,6 +13,7 @@
     display: none;
   }
   &__slide {
+    position: relative;
     scroll-snap-stop: always;
     padding: $header-height calc((100vw - #{$content-mw}) / 2) 0;
     min-height: 100%;
@@ -26,6 +27,11 @@
       &.main-slider__slide {
         padding-bottom: unset;
       }
+    }
+    &:nth-of-type(1),
+    &:nth-of-type(2),
+    &:nth-of-type(5) {
+      overflow: hidden;
     }
   }
   #principles {

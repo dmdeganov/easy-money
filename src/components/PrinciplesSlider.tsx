@@ -31,7 +31,6 @@ const PrinciplesSlider = () => {
     }, 150);
   });
 
-  console.log(isMobileWidth)
   const backgroundSize = useTransform(
     scrollXSpringed,
     [0, 0.5, 1],

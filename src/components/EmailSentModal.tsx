@@ -7,7 +7,6 @@ interface Props {
   success: boolean;
 }
 const EmailSentModal = ({isOpen, close, success}: Props) => {
-  console.log({isOpen});
   return (
     <Modal isOpen={isOpen} close={close}>
       <div className="email-sent-modal">

@@ -2,15 +2,17 @@
 import React, {useRef, useState} from 'react';
 import Header from '@/components/Header';
 import PrinciplesSlider from '@/components/PrinciplesSlider';
-import {useScroll, useMotionValueEvent, useVelocity} from 'framer-motion';
+import {useScroll, useMotionValueEvent} from 'framer-motion';
 import ContactUsForm from '@/components/ContactUsForm';
 import SliderIndicator from '@/components/SliderIndicator';
 import Heading from '@/components/Heading';
 import Projects from '@/components/Projects';
 import About from '@/components/About';
 import {useThrottle} from '@/hooks/useThrottle';
-import IphoneCanvas from '@/components/IphoneCanvas';
-import LaptopCanvas from '@/components/LaptopCanvas';
+import IphoneCanvas from '@/components/iphone-sequence/IphoneCanvas';
+import LaptopCanvas from '@/components/laptop-sequence/LaptopCanvas';
+import IphoneImage from '@/components/iphone-sequence/IphoneImage';
+import LaptopImage from '@/components/laptop-sequence/LaptopImage';
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,
@@ -53,17 +55,32 @@ const Page = () => {
     }
   };
 
+  const [isIphoneImgAnimationEnded, setIsIphoneImgAnimationEnded] = useState(false);
+  const [areImagesForIphoneSequenceLoaded, setAreImagesForIphoneSequenceLoaded] = useState(false);
+  const showIphoneSequence = isIphoneImgAnimationEnded && areImagesForIphoneSequenceLoaded;
+  const [areImagesForLaptopSequenceLoaded, setAreImagesForLaptopSequenceLoaded] = useState(false);
+
   return (
     <>
       <Header currentSlide={currentSlide} sliderRef={sliderRef} />
       <SliderIndicator currentSlide={currentSlide} />
-      <IphoneCanvas currentSlide={currentSlide} />
+      <IphoneCanvas
+        currentSlide={currentSlide}
+        onAllImagesLoad={() => setAreImagesForIphoneSequenceLoaded(true)}
+        visible={showIphoneSequence}
+      />
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide" id="about">
           <Heading sliderRef={sliderRef} isInView={currentSlide === 0} />
+          <IphoneImage
+            onAnimationCompleted={() => setIsIphoneImgAnimationEnded(true)}
+            slide={0}
+            hidden={showIphoneSequence}
+          />
         </section>
         <section className="main-slider__slide">
           <About isInView={currentSlide === 1} />
+          <IphoneImage slide={1} hidden={showIphoneSequence} />
         </section>
         <section className="main-slider__slide" id="principles">
           <PrinciplesSlider />
@@ -93,9 +110,10 @@ const Page = () => {
           <p className="copyright-mobile">
             Copyright © 2024 <b>EasyMoney Agency.</b> All Right Reserved
           </p>
+          <LaptopImage hidden={areImagesForLaptopSequenceLoaded} />
         </section>
       </div>
-      <LaptopCanvas currentSlide={currentSlide} />
+      <LaptopCanvas currentSlide={currentSlide} onAllImagesLoad={() => setAreImagesForLaptopSequenceLoaded(true)} visible={areImagesForLaptopSequenceLoaded} />
     </>
   );
 };
