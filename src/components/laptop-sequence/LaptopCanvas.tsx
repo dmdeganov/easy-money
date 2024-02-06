@@ -35,13 +35,10 @@ const LaptopCanvas = ({
 
   const drawNextFrame = () => {
     requestAnimationFrame(time => {
-      console.log(visible, currentSlide);
       if (!visible) {
         if (currentSlide === 4) {
-          console.log('render last frame');
           renderFrame(canvasRef.current!, 'laptop-last');
         } else {
-          console.log('render first frame');
           renderFrame(canvasRef.current!, 'laptop-first');
         }
         return;

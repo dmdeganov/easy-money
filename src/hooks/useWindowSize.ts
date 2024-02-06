@@ -12,7 +12,6 @@ export const useWindowSize = () => {
     height: initialHeight,
   });
   const handleResize = () => {
-    console.log(window.innerWidth)
     setWindowDimensions({
       width: window.innerWidth,
       height: window.innerHeight,
