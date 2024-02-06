@@ -1,30 +1,13 @@
-import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useRef} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 import {getAnimatedStyles} from '@/components/iphone-sequence/animatedStyles';
+import {renderFrame} from '@/components/iphone-sequence/renderFrame';
+import {preloadImages} from "@/components/sequnces/preloadImages";
 
 const frameCount = 120;
 
 export const getFrameSrc = (index: number) => `iphone/${(index + 1).toString().padStart(4, '0')}-min.png`;
-
-const preloadImages = (onAllImagesLoad: () => void) => {
-  let count = 0;
-  for (let i = 1; i < frameCount; i++) {
-    const img = new Image();
-    img.width = 0;
-    img.height = 0;
-    img.hidden = true;
-    img.id = getFrameSrc(i);
-    img.src = getFrameSrc(i);
-    document.body.appendChild(img);
-    img.onload = () => {
-      count++;
-      if (count === frameCount - 1) {
-        onAllImagesLoad();
-      }
-    };
-  }
-};
 
 const animationDuration = 2000;
 
@@ -47,14 +30,21 @@ const IphoneCanvas = ({
   const isForwardDirectionRef = useRef(true);
   const prevFrameRef = useRef(1);
   const isNewSequenceRef = useRef(false);
-  const canvasSizeRef = useRef({
-    height: 0,
-    width: 0,
-  });
 
   const drawNextFrame = () => {
     requestAnimationFrame(time => {
-      const context = canvasRef.current!.getContext('2d');
+      if (!visible) {
+        if (isForwardDirectionRef.current) {
+          renderFrame(canvasRef.current!, getFrameSrc(119));
+          prevFrameRef.current = 119;
+          animationStartedAtRef.current = {time, frame: prevFrameRef.current};
+        } else {
+          prevFrameRef.current = 1;
+          animationStartedAtRef.current = {time, frame: prevFrameRef.current};
+          renderFrame(canvasRef.current!, getFrameSrc(1));
+        }
+        return;
+      }
 
       if (isNewSequenceRef.current) {
         animationStartedAtRef.current = {time, frame: prevFrameRef.current};
@@ -69,9 +59,7 @@ const IphoneCanvas = ({
       }
       if (actualFrame >= 1 && actualFrame < frameCount) {
         prevFrameRef.current = actualFrame;
-        const img = document.getElementById(getFrameSrc(actualFrame)) as HTMLImageElement;
-        context!.clearRect(0, 0, canvasSizeRef.current.width, canvasSizeRef.current.height);
-        context!.drawImage(img, 0, 0, canvasSizeRef.current.width, canvasSizeRef.current.height);
+        renderFrame(canvasRef.current!, getFrameSrc(actualFrame));
         drawNextFrame();
       }
     });
@@ -89,24 +77,15 @@ const IphoneCanvas = ({
   };
 
   useEffect(() => {
-    preloadImages(onAllImagesLoad);
+    preloadImages(frameCount, getFrameSrc, onAllImagesLoad);
   }, []);
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current!;
     const [width, height] = isMobileWidth ? [1000, 1000] : [1920, 1920];
-    canvasSizeRef.current = {height, width};
     canvas.height = height;
     canvas.width = width;
   }, []);
-
-  useEffect(() => {
-    if (visible) {
-      const context = canvasRef.current!.getContext('2d');
-      const initialImage = document.getElementById(getFrameSrc(1)) as HTMLImageElement;
-      context!.drawImage(initialImage, 0, 0, canvasSizeRef.current.width, canvasSizeRef.current.height);
-    }
-  }, [visible]);
 
   useEffect(() => {
     if (currentSlide === prevSlideRef.current) return;
@@ -119,6 +98,12 @@ const IphoneCanvas = ({
     prevSlideRef.current = currentSlide;
   }, [currentSlide]);
 
+  useEffect(() => {
+    if (visible && !animationStartedAtRef.current.time) {
+      renderFrame(canvasRef.current!, getFrameSrc(1));
+    }
+  }, [visible]);
+
   const style = visible && currentSlide <= 1 ? {opacity: 1} : {opacity: 0};
 
   return (
@@ -127,7 +112,7 @@ const IphoneCanvas = ({
       animate={{...getAnimatedStyles(currentSlide, width), ...style}}
       initial={false}
       hidden={!visible}
-      transition={{duration: 1.4, opacity: {duration: 0.2}}}
+      transition={{duration: visible ? 1.4 : 0, opacity: {duration: 0.2}}}
       className="iphone-motion"
       id="iphone-motion"
       ref={canvasRef}

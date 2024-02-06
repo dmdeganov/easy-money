@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
 import {motion} from 'framer-motion';
 
-import {getFrameSrc} from "@/components/laptop-sequence/LaptopCanvas";
-import {animatedStyles} from "@/components/laptop-sequence/animatedStyles";
+import {getFrameSrc} from '@/components/laptop-sequence/LaptopCanvas';
+import {animatedStyles} from '@/components/laptop-sequence/animatedStyles';
 
 const LaptopImage = ({hidden}: {hidden: boolean}) => {
   const {width} = useContext(WindowSizeContext);
@@ -17,7 +17,7 @@ const LaptopImage = ({hidden}: {hidden: boolean}) => {
   return (
     <motion.img
       initial={{opacity: 0}}
-      transition={{duration: 1.6}}
+      transition={{duration: 1.6, opacity: {duration: 0.2}}}
       className="laptop-motion"
       src={getFrameSrc(96)}
       alt=""

@@ -21,6 +21,7 @@ const scrollYMap: {[k: number]: number} = {
   3: 0.75,
   4: 1,
 };
+
 const threshold = 0.03;
 
 const Page = () => {
@@ -33,7 +34,9 @@ const Page = () => {
     const direction = scrollY > prevScrollY.current ? 'down' : 'up';
     if (direction === 'down') {
       if (scrollY > scrollYMap[currentSlide] + threshold) {
-        setCurrentSlide(prev => Math.min(4, prev + 1));
+        setCurrentSlide(prev => {
+          return Math.min(4, prev + 1);
+        });
       }
     }
     if (direction === 'up') {
@@ -43,6 +46,7 @@ const Page = () => {
     }
     prevScrollY.current = scrollY;
   };
+
   const onScrollYChangeThrottled = useThrottle(onScrollYChange, 50);
   useMotionValueEvent(scrollYProgress, 'change', onScrollYChangeThrottled);
 
@@ -71,7 +75,7 @@ const Page = () => {
       />
       <div className="main-slider" ref={sliderRef} onWheel={onWheel}>
         <section className="main-slider__slide" id="about">
-          <Heading sliderRef={sliderRef} isInView={currentSlide === 0} />
+          <Heading isInView={currentSlide === 0} />
           <IphoneImage
             onAnimationCompleted={() => setIsIphoneImgAnimationEnded(true)}
             slide={0}
@@ -113,7 +117,12 @@ const Page = () => {
           <LaptopImage hidden={areImagesForLaptopSequenceLoaded} />
         </section>
       </div>
-      <LaptopCanvas currentSlide={currentSlide} onAllImagesLoad={() => setAreImagesForLaptopSequenceLoaded(true)} visible={areImagesForLaptopSequenceLoaded} />
+      <LaptopCanvas
+        currentSlide={currentSlide}
+        areImagesForIphoneSequenceLoaded={areImagesForIphoneSequenceLoaded}
+        onAllImagesLoad={() => setAreImagesForLaptopSequenceLoaded(true)}
+        visible={areImagesForLaptopSequenceLoaded}
+      />
     </>
   );
 };

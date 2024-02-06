@@ -24,6 +24,7 @@ const IphoneImage = ({onAnimationCompleted, hidden, slide}: Props) => {
 
   return (
     <motion.img
+      suppressHydrationWarning={true}
       initial={{opacity: 0}}
       transition={{duration: 1.4, opacity: {duration: 0.2}}}
       onAnimationComplete={onAnimationCompleted}

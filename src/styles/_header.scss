@@ -11,17 +11,19 @@ header {
 }
 .header-inner {
   max-width: $content-mw;
-  height:$header-height;
+  height: $header-height;
   margin-inline: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  button {
+    cursor: not-allowed;
+  }
   nav {
     display: flex;
     column-gap: 32px;
   }
   @media only screen and (max-width: 640px) {
-
   }
   @media only screen and (max-width: 640px) {
     height: 64px;

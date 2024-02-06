@@ -1,25 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Image from 'next/image';
 import OutlinedButton from '@/components/OutlinedButton';
 
-// activeLink: 'about' | 'principles' | 'projects' | ''
-
 const Header = ({currentSlide, sliderRef}: {currentSlide: number; sliderRef: React.RefObject<HTMLDivElement>}) => {
+  const disableScrollingByLinksRef = useRef(true);
+
   const scrollToElementWithId = (elementId: string) => {
+    if (disableScrollingByLinksRef.current) return;
     const element = document.getElementById(elementId);
     if (!element) return;
     sliderRef.current!.scrollTo(0, element.offsetTop);
   };
 
-  // const [gap, setGap] = useState(100);
-  //
-  // useEffect(() => {
-  //   sliderRef.current!.style.rowGap = `${gap}vh`;
-  // }, [gap]);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      disableScrollingByLinksRef.current = false;
+      const buttonCollection = headerRef.current!.getElementsByTagName('button');
+      for (let i = 0; i < buttonCollection.length; i++) {
+        buttonCollection[i].style.cursor = 'pointer';
+      }
+    }, 2000);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   return (
     <header>
-      <div className="header-inner">
+      <div className="header-inner" ref={headerRef}>
         <Image src="/logo.svg" alt="Easy Money Logo" width={81} height={30} />
         <nav>
           <button
@@ -44,10 +52,6 @@ const Header = ({currentSlide, sliderRef}: {currentSlide: number; sliderRef: Rea
             <div className="link__underline" />
           </button>
         </nav>
-        {/*<div>*/}
-        {/*  <input type="range" min={0} max={200} value={gap} onChange={e => setGap(Number(e.target.value))} />*/}
-        {/*  <span>{gap}</span>*/}
-        {/*</div>*/}
         <OutlinedButton onClick={() => scrollToElementWithId('contact-us')}>Работа с нами</OutlinedButton>
       </div>
     </header>

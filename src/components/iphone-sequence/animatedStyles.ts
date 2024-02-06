@@ -14,10 +14,10 @@ export const getAnimatedStyles = (currentSlide: number, width: number) => {
         return {scale: 1.3, opacity: 0, x: -300, y: 400};
     }
   }
-  if (width < 1280 && width > 640) {
+  if (width > 640 && width < 1280  ) {
     switch (currentSlide) {
       case 0:
-        return {scale: 1.2, x: -50, opacity: 1, y: 0};
+        return {scale: 1.2, x: 250, opacity: 1, y: 0};
       case 1:
         return {
           scale: 1.2,
@@ -34,7 +34,7 @@ export const getAnimatedStyles = (currentSlide: number, width: number) => {
       case 0:
         return {
           opacity: 1,
-          y: '-10vh',
+          y: '-10vw',
           scale: 1.1,
           x: 0,
         };

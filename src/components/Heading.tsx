@@ -1,8 +1,8 @@
 'use client';
-import React, {useEffect, useRef, useState} from 'react';
-import {motion, useInView} from 'framer-motion';
+import React, {useRef} from 'react';
+import {motion} from 'framer-motion';
 
-const Heading = ({sliderRef, isInView}: {sliderRef: React.RefObject<HTMLDivElement>; isInView: boolean}) => {
+const Heading = ({isInView}: {isInView: boolean}) => {
   const hgroupRef = useRef<HTMLElement>(null);
   // const isInView = useInView(hgroupRef, {margin: '-50% 0px 0px 0px', root: sliderRef});
 

@@ -1,7 +1,6 @@
 import React, {useRef} from 'react';
 import Image from 'next/image';
 import {motion} from 'framer-motion';
-import './projects.css'
 
 const Projects = ({isInView}: {isInView: boolean}) => {
   const ref = useRef<HTMLDivElement>(null);
