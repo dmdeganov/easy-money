@@ -36,14 +36,14 @@ export const getAnimatedStyles = (currentSlide: number, width: number) => {
           opacity: 1,
           y: '-10vw',
           scale: 1.1,
-          x: 0,
+          x: '45vh',
         };
       case 1:
         return {
           opacity: 1,
           y: '30%',
           scale: 1.1,
-          x: '-45%',
+          x: '2%',
         };
       default:
         return {

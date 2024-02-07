@@ -76,11 +76,8 @@ const IphoneCanvas = ({
     drawNextFrame();
   };
 
-  useEffect(() => {
-    preloadImages(frameCount, getFrameSrc, onAllImagesLoad);
-  }, []);
-
   useLayoutEffect(() => {
+    preloadImages(frameCount, getFrameSrc, onAllImagesLoad);
     const canvas = canvasRef.current!;
     const [width, height] = isMobileWidth ? [1000, 1000] : [1920, 1920];
     canvas.height = height;
