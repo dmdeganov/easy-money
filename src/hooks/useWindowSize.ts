@@ -1,6 +1,5 @@
 'use client';
 import {useEffect, useState} from 'react';
-import {mobileMaxWidth} from '@/config';
 import {useDebounce} from '@/hooks/useDebounce';
 
 export const useWindowSize = () => {
@@ -28,6 +27,6 @@ export const useWindowSize = () => {
   return {
     width: windowDimensions.width,
     height: windowDimensions.height,
-    isMobileWidth: windowDimensions.width <= mobileMaxWidth,
+    isMobileWidth: windowDimensions.width <= 640,
   };
 };

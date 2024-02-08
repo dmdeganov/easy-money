@@ -9,14 +9,6 @@
   overflow: hidden;
   z-index: 999;
   opacity: 0;
-  pointer-events: none;
   background: rgba(0, 0, 0, 0.50);
 }
 
-.modal-enter-done {
-  opacity: 1;
-  pointer-events: auto;
-}
-.modal-exit {
-  opacity: 0;
-}

@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
-import TextField from '@/components/TextField';
-import ContainedButton from '@/components/ContainedButton';
+import TextField from '@/shared-ui/TextField';
+import ContainedButton from '@/shared-ui/ContainedButton';
 import {useSendEmail} from '@/hooks/useSendEmail';
 import useModal from '@/hooks/useModal';
 import EmailSentModal from '@/components/EmailSentModal';
@@ -110,9 +110,10 @@ const ContactUsForm = () => {
         />
         <ContainedButton
           type="submit"
-          onClick={handleSubmit(onSubmit)}
+          // onClick={handleSubmit(onSubmit)}
+          onClick={open}
           className="contact-form__submit-button"
-          disabled={!isValid}
+          // disabled={!isValid}
           loading={loading}
         >
           Отправить

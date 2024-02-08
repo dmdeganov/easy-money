@@ -4,15 +4,15 @@ import Header from '@/components/Header';
 import PrinciplesSlider from '@/components/PrinciplesSlider';
 import {useScroll, useMotionValueEvent} from 'framer-motion';
 import ContactUsForm from '@/components/ContactUsForm';
-import SliderIndicator from '@/components/SliderIndicator';
+import SliderIndicator from '@/shared-ui/SliderIndicator';
 import Heading from '@/components/Heading';
 import Projects from '@/components/Projects';
 import About from '@/components/About';
 import {useThrottle} from '@/hooks/useThrottle';
-import IphoneCanvas from '@/components/iphone-sequence/IphoneCanvas';
-import LaptopCanvas from '@/components/laptop-sequence/LaptopCanvas';
-import IphoneImage from '@/components/iphone-sequence/IphoneImage';
-import LaptopImage from '@/components/laptop-sequence/LaptopImage';
+import IphoneCanvas from '@/components/sequnces/iphone-sequence/IphoneCanvas';
+import LaptopCanvas from '@/components/sequnces/laptop-sequence/LaptopCanvas';
+import IphoneImage from '@/components/sequnces/iphone-sequence/IphoneImage';
+import LaptopImage from '@/components/sequnces/laptop-sequence/LaptopImage';
 
 const scrollYMap: {[k: number]: number} = {
   0: 0,

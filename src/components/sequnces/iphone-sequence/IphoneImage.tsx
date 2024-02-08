@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {motion} from 'framer-motion';
-import {getAnimatedStyles} from '@/components/iphone-sequence/animatedStyles';
+import {getAnimatedStyles} from '@/components/sequnces/iphone-sequence/animatedStyles';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
-import {getFrameSrc} from '@/components/iphone-sequence/IphoneCanvas';
+import {getFrameSrc} from '@/components/sequnces/iphone-sequence/IphoneCanvas';
 
 interface Props {
   onAnimationCompleted?: () => void;

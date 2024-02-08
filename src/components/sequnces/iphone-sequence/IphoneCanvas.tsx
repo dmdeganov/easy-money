@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useLayoutEffect, useRef} from 'react';
 import {motion} from 'framer-motion';
 import {WindowSizeContext} from '@/app/WindowSizeContextProvider';
-import {getAnimatedStyles} from '@/components/iphone-sequence/animatedStyles';
-import {renderFrame} from '@/components/iphone-sequence/renderFrame';
+import {getAnimatedStyles} from '@/components/sequnces/iphone-sequence/animatedStyles';
+import {renderFrame} from '@/components/sequnces/iphone-sequence/renderFrame';
 import {preloadImages} from "@/components/sequnces/preloadImages";
 
 const frameCount = 120;

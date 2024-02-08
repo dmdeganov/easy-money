@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import Image from 'next/image';
-import OutlinedButton from '@/components/OutlinedButton';
+import OutlinedButton from '@/shared-ui/OutlinedButton';
 
 const Header = ({currentSlide, sliderRef}: {currentSlide: number; sliderRef: React.RefObject<HTMLDivElement>}) => {
   const disableScrollingByLinksRef = useRef(true);

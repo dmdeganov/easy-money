@@ -27,7 +27,7 @@ export const getAnimatedStyles = (currentSlide: number, width: number) => {
         };
       default:
         return {scale: 1.3, opacity: 0, x: '-10vw', y: 400};
-        
+
     }
   }
   if (width <= 640) {

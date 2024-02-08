@@ -3,7 +3,6 @@
 const path = require('node:path');
 
 const nextConfig = {
-  transpilePackages: ['three'],
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,
